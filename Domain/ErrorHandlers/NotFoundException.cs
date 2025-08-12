@@ -1,6 +1,6 @@
-﻿namespace Domain.CustomExceptions;
+﻿namespace Domain.ErrorHandlers;
 
-public class NotFoundException
+public class NotFoundException(string message) : Exception(message)
 {
     
 }
