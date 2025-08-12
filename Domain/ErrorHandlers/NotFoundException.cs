@@ -1,4 +1,4 @@
-﻿namespace Domain.CustomExceptions;
+﻿namespace Domain.ErrorHandlers;
 
 public class NotFoundException
 {

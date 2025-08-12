@@ -1,6 +1,6 @@
 ﻿namespace Domain.Enums.Booking;
 
-public enum Genre
+public enum GenreType
 {
     Adventures = 1, 
     LoveStories = 2,

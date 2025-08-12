@@ -5,13 +5,13 @@ namespace Domain.Entities.Booking;
 
 public class Book
 {
-    public Guid Id { get; set; }
-    public Guid UserId { get; set; }
-    public Guid AuthorId { get; set; }
+    public int Id { get; set; }
+    public int? UserId { get; set; }
+    public int AuthorId { get; set; }
     
     public string ISBN { get; set; }
     public string BookTitle { get; set; }
-    public Genre Genre { get; set; }
+    public GenreType GenreType { get; set; }
     public string Description { get; set; }
     public Int16 Amount { get; set; }
     
