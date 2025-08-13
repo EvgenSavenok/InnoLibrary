@@ -4,7 +4,7 @@ namespace Application.Contracts.RepositoryContracts.Booking;
 
 public interface IBaseRepository<T>
 {
-    public Task<IEnumerable<T>> FindAll(bool trackChanges, CancellationToken cancellationToken);
+    public Task<IEnumerable<T>> FindAll(CancellationToken cancellationToken);
     
     public Task<IEnumerable<T>> FindByCondition(
         Expression<Func<T, bool>> expression,
