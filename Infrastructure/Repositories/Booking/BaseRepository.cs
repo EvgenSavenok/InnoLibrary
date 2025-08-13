@@ -9,23 +9,18 @@ public abstract class BaseRepository<T>(BookingContext bookingContext) : IBaseRe
     where T : class
 {
     public virtual async Task<IEnumerable<T>> FindAll(
-        bool trackChanges,
         CancellationToken cancellationToken) =>
-        await (!trackChanges ? bookingContext.Set<T>().AsNoTracking() : bookingContext.Set<T>())
+        await bookingContext.Set<T>().AsNoTracking()
             .ToListAsync(cancellationToken: cancellationToken);
     
     public async Task<IEnumerable<T>> FindByCondition(
         Expression<Func<T, bool>> expression,
-        bool trackChanges,
         CancellationToken cancellationToken,
         params Expression<Func<T, object>>[] includes)
     {
         IQueryable<T> query = bookingContext.Set<T>();
-
-        if (!trackChanges)
-            query = query.AsNoTracking();
-
-        query = query.Where(expression);
+        
+        query = query.Where(expression).AsNoTracking();
 
         if (includes is { Length: > 0 })
         {
