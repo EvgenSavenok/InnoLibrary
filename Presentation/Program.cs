@@ -21,6 +21,4 @@ app.MapControllers();
 
 app.ApplyMigrations();
 
-app.MapGet("/", () => "Hello, rate limiting!");
-
 app.Run();
