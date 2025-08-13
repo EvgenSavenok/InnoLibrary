@@ -10,10 +10,12 @@ namespace Infrastructure.Extensions;
 
 public static class DbExtension
 {
-    public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
+    public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration)
+    {
         services.AddDbContext<BookingContext>(opts =>
             opts.UseNpgsql(configuration.GetConnectionString("sqlConnection")));
-    
+    }
+
     public static void ConfigureUnitOfWork(this IServiceCollection services) =>
         services.AddScoped<IUnitOfWork, UnitOfWork>();
     
