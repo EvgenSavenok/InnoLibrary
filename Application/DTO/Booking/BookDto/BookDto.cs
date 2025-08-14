@@ -1,9 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using Domain.Entities.Booking;
 using Domain.Enums.Booking;
 
-namespace Domain.Entities.Booking;
+namespace Application.DTO.Booking.BookDto;
 
-public class Book
+public record BookDto
 {
     public int Id { get; set; }
     public int? UserId { get; set; }
@@ -14,8 +14,6 @@ public class Book
     public string Description { get; set; }
     public Int16 Amount { get; set; }
     
-    [JsonIgnore]
     public ICollection<Author> BookAuthors { get; set; } = new List<Author>();
-    [JsonIgnore]
     public ICollection<UserBookReservations> BookReservations { get; set; } = new List<UserBookReservations>();
 }
