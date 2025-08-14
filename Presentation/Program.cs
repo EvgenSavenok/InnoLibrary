@@ -20,6 +20,8 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 app.UseSwagger();
 app.UseSwaggerUI(s =>
 {
@@ -27,8 +29,6 @@ app.UseSwaggerUI(s =>
 });
 
 app.UseRouting();
-
-app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapControllers();
 app.MapRazorPages();

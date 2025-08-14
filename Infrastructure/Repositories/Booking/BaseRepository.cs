@@ -21,12 +21,15 @@ public abstract class BaseRepository<T>(BookingContext bookingContext) : IBaseRe
     
     public async Task<IEnumerable<T>> FindByCondition(
         Expression<Func<T, bool>> expression,
+        bool trackChanges,
         CancellationToken cancellationToken,
         params Expression<Func<T, object>>[] includes)
     {
         IQueryable<T> query = bookingContext.Set<T>();
         
         query = query.Where(expression).AsNoTracking();
+
+        query = query.Where(expression);
 
         if (includes is { Length: > 0 })
         {
