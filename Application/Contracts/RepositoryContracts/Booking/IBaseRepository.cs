@@ -9,7 +9,6 @@ public interface IBaseRepository<T>
     
     public Task<IEnumerable<T>> FindByCondition(
         Expression<Func<T, bool>> expression,
-        bool trackChanges,
         CancellationToken cancellationToken,
         params Expression<Func<T, object>>[] includes);
     

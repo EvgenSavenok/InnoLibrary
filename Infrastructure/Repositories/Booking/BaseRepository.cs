@@ -21,7 +21,6 @@ public abstract class BaseRepository<T>(BookingContext bookingContext) : IBaseRe
     
     public async Task<IEnumerable<T>> FindByCondition(
         Expression<Func<T, bool>> expression,
-        bool trackChanges,
         CancellationToken cancellationToken,
         params Expression<Func<T, object>>[] includes)
     {
