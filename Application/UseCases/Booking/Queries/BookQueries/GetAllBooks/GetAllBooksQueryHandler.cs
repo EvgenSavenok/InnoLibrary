@@ -1,20 +1,25 @@
 ﻿using Application.Contracts.RepositoryContracts.Booking;
 using Application.DTO.Booking.BookDto;
 using Application.MappingProfiles.Booking;
+using Application.RequestFeatures;
 using MediatR;
 
 namespace Application.UseCases.Booking.Queries.BookQueries.GetAllBooks;
 
 public class GetAllBooksQueryHandler(
     IUnitOfWork unitOfWork)
-    : IRequestHandler<GetAllBooksQuery, IEnumerable<BookDto>>
+    : IRequestHandler<GetAllBooksQuery, PagedResult<BookDto>>
 {
-    public async Task<IEnumerable<BookDto>> Handle(GetAllBooksQuery request, CancellationToken cancellationToken)
+    public async Task<PagedResult<BookDto>> Handle(GetAllBooksQuery request, CancellationToken cancellationToken)
     {
-        var books = await unitOfWork.BookRepository.GetAllBooksAsync(cancellationToken);
+        var booksPaged = await unitOfWork.BookRepository.GetAllBooksAsync(request.Parameters, cancellationToken);
 
-        var bookDtos = BookMapper.EntitiesToDtos(books);
-
-        return bookDtos;
+        return new PagedResult<BookDto>
+        {
+            Items = BookMapper.EntitiesToDtos(booksPaged.Items),
+            TotalCount = booksPaged.TotalCount,
+            PageNumber = booksPaged.PageNumber,
+            PageSize = booksPaged.PageSize
+        };
     }
 }

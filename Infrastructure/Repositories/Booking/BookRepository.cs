@@ -1,4 +1,5 @@
 ﻿using Application.Contracts.RepositoryContracts.Booking;
+using Application.RequestFeatures;
 using Domain.Entities.Booking;
 using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -19,21 +20,32 @@ public class BookRepository(BookingContext repositoryContext)
         return books.FirstOrDefault();
     }
     
-    public async Task<IEnumerable<Book>> GetAllBooksAsync(
-        CancellationToken cancellationToken,
-        int pageNumber = 1,
-        int pageSize = 10,
-        Func<IQueryable<Book>, IOrderedQueryable<Book>>? orderBy = null)
+    public async Task<PagedResult<Book>> GetAllBooksAsync(
+        BookQueryParameters parameters,
+        CancellationToken cancellationToken)
     {
         var query = FindAllQuery();
         
-        if (orderBy != null)
-            query = orderBy(query);
+        if (!string.IsNullOrWhiteSpace(parameters.OrderBy))
+        {
+            query = parameters.Descending
+                ? query.OrderByDescending(book => EF.Property<object>(book, parameters.OrderBy))
+                : query.OrderBy(e => EF.Property<object>(e, parameters.OrderBy));
+        }
 
-        query = query
-            .Skip((pageNumber - 1) * pageSize)
-            .Take(pageSize);
+        var totalCount = await query.CountAsync(cancellationToken);
 
-        return await query.ToListAsync(cancellationToken);
+        var items = await query
+            .Skip((parameters.PageNumber - 1) * parameters.PageSize)
+            .Take(parameters.PageSize)
+            .ToListAsync(cancellationToken);
+
+        return new PagedResult<Book>
+        {
+            Items = items,
+            TotalCount = totalCount,
+            PageNumber = parameters.PageNumber,
+            PageSize = parameters.PageSize
+        };
     }
 }

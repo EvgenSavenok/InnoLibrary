@@ -1,4 +1,5 @@
 ﻿using Application.DTO.Booking.BookDto;
+using Application.RequestFeatures;
 using Application.UseCases.Booking.Commands.BookCommands.CreateBook;
 using Application.UseCases.Booking.Commands.BookCommands.DeleteBook;
 using Application.UseCases.Booking.Commands.BookCommands.UpdateBook;
@@ -23,9 +24,11 @@ public class BookController(IMediator mediator): Controller
     }
 
     [HttpGet("getAllBooks")]
-    public async Task<IActionResult> GetAllBooks(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAllBooks(
+        [FromQuery] BookQueryParameters parameters, 
+        CancellationToken cancellationToken)
     {
-        var query = new GetAllBooksQuery();
+        var query = new GetAllBooksQuery { Parameters = parameters};
         var books = await mediator.Send(query, cancellationToken);
         
         return Ok(books);
