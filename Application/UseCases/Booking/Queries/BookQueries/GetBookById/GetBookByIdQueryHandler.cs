@@ -12,14 +12,14 @@ public class GetBookByIdQueryHandler(IUnitOfWork unitOfWork) : IRequestHandler<G
     {
         int bookId = request.BookId;
         
-        var book = await unitOfWork.BookRepository.GetBookByIdAsync(bookId, cancellationToken);
+        var bookEntity = await unitOfWork.BookRepository.GetBookByIdAsync(bookId, cancellationToken);
 
-        if (book == null)
+        if (bookEntity == null)
         {
             throw new NotFoundException($"Book with id {bookId} not found.");
         }
 
-        var bookDto = BookMapper.EntityToDto(book);
+        var bookDto = BookMapper.EntityToDto(bookEntity);
         
         return bookDto;
     }

@@ -12,7 +12,9 @@ public class DeleteBookCommandHandler(
     {
         var bookId = request.BookId;
         
-        var bookEntity = await unitOfWork.BookRepository.GetBookByIdAsync(bookId, cancellationToken);
+        var bookEntity = await unitOfWork.BookRepository.GetBookByIdAsync(
+            bookId, 
+            cancellationToken);
         if (bookEntity == null)
         {
             throw new NotFoundException($"Book with id {bookId} was not found");

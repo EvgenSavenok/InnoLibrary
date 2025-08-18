@@ -7,14 +7,21 @@ namespace Application.UseCases.Booking.Commands.BookCommands.CreateBook;
 
 public class CreateBookCommandHandler(
     IUnitOfWork unitOfWork)
-    : IRequestHandler<CreateBookCommand, CreateBookRepsponseDto>
+    : IRequestHandler<CreateBookCommand, CreateBookResponseDto>
 {
-    public async Task<CreateBookRepsponseDto> Handle(CreateBookCommand request, CancellationToken cancellationToken)
+    public async Task<CreateBookResponseDto> Handle(CreateBookCommand request, CancellationToken cancellationToken)
     {
         var bookEntity = BookMapper.CommandToEntity(request);
+        
+        var existingAuthors = (await unitOfWork.AuthorRepository
+                .FindByConditionTracked(
+                    author => request.BookDto.AuthorIds.Contains(author.AuthorId), 
+                    cancellationToken))
+            .ToList();
+        bookEntity.BookAuthors = existingAuthors;
 
         await unitOfWork.BookRepository.Create(bookEntity, cancellationToken);
 
-        return new CreateBookRepsponseDto { BookId = bookEntity.Id };
+        return new CreateBookResponseDto { BookId = bookEntity.Id };
     }
 }

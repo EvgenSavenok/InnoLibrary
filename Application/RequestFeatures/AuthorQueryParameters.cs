@@ -2,4 +2,4 @@
 
 namespace Application.RequestFeatures;
 
-public record BookQueryParameters : QueryParameters;
+public record AuthorQueryParameters : QueryParameters;

@@ -11,12 +11,7 @@ public abstract class BaseRepository<T>(BookingContext bookingContext) : IBaseRe
     public virtual async Task<IEnumerable<T>> FindAll(
         CancellationToken cancellationToken)
     {
-        return await FindAllQuery().ToListAsync(cancellationToken);
-    }
-
-    public IQueryable<T> FindAllQuery()
-    {
-        return bookingContext.Set<T>().AsNoTracking();
+        return await bookingContext.Set<T>().AsNoTracking().ToListAsync(cancellationToken);
     }
     
     public async Task<IEnumerable<T>> FindByCondition(
@@ -28,8 +23,6 @@ public abstract class BaseRepository<T>(BookingContext bookingContext) : IBaseRe
         
         query = query.Where(expression).AsNoTracking();
 
-        query = query.Where(expression);
-
         if (includes is { Length: > 0 })
         {
             foreach (var include in includes)
@@ -40,6 +33,25 @@ public abstract class BaseRepository<T>(BookingContext bookingContext) : IBaseRe
         
         return await query.ToListAsync(cancellationToken);
     }
+    
+    public async Task<IEnumerable<T>> FindByConditionTracked(
+        Expression<Func<T, bool>> expression,
+        CancellationToken cancellationToken,
+        params Expression<Func<T, object>>[] includes)
+    {
+        IQueryable<T> query = bookingContext.Set<T>().Where(expression);
+
+        if (includes is { Length: > 0 })
+        {
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+        }
+
+        return await query.ToListAsync(cancellationToken);
+    }
+    
     
     public async Task Create(T entity, CancellationToken cancellationToken = default)
     {

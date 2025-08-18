@@ -11,6 +11,11 @@ public interface IBaseRepository<T>
         Expression<Func<T, bool>> expression,
         CancellationToken cancellationToken,
         params Expression<Func<T, object>>[] includes);
+
+    public Task<IEnumerable<T>> FindByConditionTracked(
+        Expression<Func<T, bool>> expression,
+        CancellationToken cancellationToken,
+        params Expression<Func<T, object>>[] includes);
     
     Task Create(T entity, CancellationToken cancellationToken);
     

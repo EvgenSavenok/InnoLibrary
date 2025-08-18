@@ -6,15 +6,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.Booking;
 
-public class BookRepository(BookingContext repositoryContext)
-    : BaseRepository<Book>(repositoryContext), IBookRepository
+public class BookRepository(BookingContext bookingContext)
+    : BaseRepository<Book>(bookingContext), IBookRepository
 {
-    public async Task<Book?> GetBookByIdAsync(int bookId, CancellationToken cancellationToken)
+    public async Task<Book?> GetBookByIdAsync(
+        int bookId, 
+        CancellationToken cancellationToken)
     {
         var books = await FindByCondition(
             book => book.Id == bookId, 
             cancellationToken, 
-            book => book.BookReservations,
+            book => book.BookAuthors,
             book => book.BookReservations);
         
         return books.FirstOrDefault();
@@ -24,13 +26,15 @@ public class BookRepository(BookingContext repositoryContext)
         BookQueryParameters parameters,
         CancellationToken cancellationToken)
     {
-        var query = FindAllQuery();
-        
+        IQueryable<Book> query = bookingContext.Books
+            .AsNoTracking()
+            .Include(book => book.BookAuthors);
+
         if (!string.IsNullOrWhiteSpace(parameters.OrderBy))
         {
             query = parameters.Descending
                 ? query.OrderByDescending(book => EF.Property<object>(book, parameters.OrderBy))
-                : query.OrderBy(e => EF.Property<object>(e, parameters.OrderBy));
+                : query.OrderBy(book => EF.Property<object>(book, parameters.OrderBy));
         }
 
         var totalCount = await query.CountAsync(cancellationToken);
@@ -47,5 +51,18 @@ public class BookRepository(BookingContext repositoryContext)
             PageNumber = parameters.PageNumber,
             PageSize = parameters.PageSize
         };
+    }
+
+    public async Task<Book?> GetTrackedBookByIdAsync(
+        int bookId,
+        CancellationToken cancellationToken)
+    {
+        var books = await FindByConditionTracked(
+            book => book.Id == bookId,
+            cancellationToken,
+            book => book.BookAuthors,
+            book => book.BookReservations);
+
+        return books.FirstOrDefault();
     }
 }
