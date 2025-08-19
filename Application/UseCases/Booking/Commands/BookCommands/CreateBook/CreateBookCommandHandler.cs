@@ -13,7 +13,7 @@ public class CreateBookCommandHandler(
     {
         var bookEntity = BookMapper.CommandToEntity(request);
 
-        await unitOfWork.BookRepository.Create(bookEntity, cancellationToken);
+        await unitOfWork.BookRepository.CreateAsync(bookEntity, cancellationToken);
 
         return new CreateBookRepsponseDto { BookId = bookEntity.Id };
     }

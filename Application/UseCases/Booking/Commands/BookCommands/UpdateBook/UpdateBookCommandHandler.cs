@@ -23,7 +23,7 @@ public class UpdateBookCommandHandler(
         
         bookEntity = BookMapper.DtoToEntity(request.BookDto);
         
-        await unitOfWork.BookRepository.Update(bookEntity, cancellationToken);
+        await unitOfWork.BookRepository.UpdateAsync(bookEntity, cancellationToken);
         
         return Unit.Value;
     }

@@ -8,18 +8,8 @@ namespace Infrastructure.Repositories.Booking;
 public abstract class BaseRepository<T>(BookingContext bookingContext) : IBaseRepository<T> 
     where T : class
 {
-    public virtual async Task<IEnumerable<T>> FindAll(
-        CancellationToken cancellationToken)
-    {
-        return await FindAllQuery().ToListAsync(cancellationToken);
-    }
-
-    public IQueryable<T> FindAllQuery()
-    {
-        return bookingContext.Set<T>().AsNoTracking();
-    }
     
-    public async Task<IEnumerable<T>> FindByCondition(
+    public async Task<IEnumerable<T>> FindByConditionAsync(
         Expression<Func<T, bool>> expression,
         CancellationToken cancellationToken,
         params Expression<Func<T, object>>[] includes)
@@ -27,8 +17,6 @@ public abstract class BaseRepository<T>(BookingContext bookingContext) : IBaseRe
         IQueryable<T> query = bookingContext.Set<T>();
         
         query = query.Where(expression).AsNoTracking();
-
-        query = query.Where(expression);
 
         if (includes is { Length: > 0 })
         {
@@ -41,13 +29,13 @@ public abstract class BaseRepository<T>(BookingContext bookingContext) : IBaseRe
         return await query.ToListAsync(cancellationToken);
     }
     
-    public async Task Create(T entity, CancellationToken cancellationToken = default)
+    public async Task CreateAsync(T entity, CancellationToken cancellationToken = default)
     {
         await bookingContext.Set<T>().AddAsync(entity, cancellationToken); 
         await bookingContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task Update(T entity, CancellationToken cancellationToken = default)
+    public async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
     {
         bookingContext.Set<T>().Update(entity); 
         await bookingContext.SaveChangesAsync(cancellationToken);

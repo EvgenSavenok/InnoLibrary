@@ -1,16 +1,17 @@
 ﻿using Application.Contracts.RepositoryContracts.Booking;
+using Application.RequestFeatures;
 using Domain.Entities.Booking;
 using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.Booking;
 
-public class BookRepository(BookingContext repositoryContext)
-    : BaseRepository<Book>(repositoryContext), IBookRepository
+public class BookRepository(BookingContext bookingContext)
+    : BaseRepository<Book>(bookingContext), IBookRepository
 {
     public async Task<Book?> GetBookByIdAsync(int bookId, CancellationToken cancellationToken)
     {
-        var books = await FindByCondition(
+        var books = await FindByConditionAsync(
             book => book.Id == bookId, 
             cancellationToken, 
             book => book.BookReservations,
@@ -25,14 +26,12 @@ public class BookRepository(BookingContext repositoryContext)
         int pageSize = 10,
         Func<IQueryable<Book>, IOrderedQueryable<Book>>? orderBy = null)
     {
-        var query = FindAllQuery();
+        IQueryable<Book> query = bookingContext.Set<Book>().AsNoTracking();
         
         if (orderBy != null)
             query = orderBy(query);
 
-        query = query
-            .Skip((pageNumber - 1) * pageSize)
-            .Take(pageSize);
+        query = query.Paging(1, 10);
 
         return await query.ToListAsync(cancellationToken);
     }
