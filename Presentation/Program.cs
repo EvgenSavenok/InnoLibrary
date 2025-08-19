@@ -8,6 +8,11 @@ builder.Services.ConfigureUnitOfWork();
 builder.Services.ConfigureRateLimiting();
 builder.Services.ConfigureSwagger();
 
+builder.Services.AddMediatR(cfg =>
+{
+    var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+    cfg.RegisterServicesFromAssemblies(assemblies);
+});
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
