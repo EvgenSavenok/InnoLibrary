@@ -1,6 +1,6 @@
 ﻿namespace Application.DTO.Booking.BookDto;
 
-public record CreateBookRepsponseDto
+public record CreateBookResponseDto
 {
     public int? BookId { get; set; }
 }

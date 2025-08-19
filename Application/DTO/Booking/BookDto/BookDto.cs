@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Booking;
+﻿using Application.DTO.Booking.AuthorDto;
+using Domain.Entities.Booking;
 using Domain.Enums.Booking;
 
 namespace Application.DTO.Booking.BookDto;
@@ -14,6 +15,8 @@ public record BookDto
     public string Description { get; set; }
     public Int16 Amount { get; set; }
     
-    public ICollection<Author> BookAuthors { get; set; } = new List<Author>();
+    public List<int> AuthorIds { get; set; } = new();
+    
+    public ICollection<BookAuthorDto> BookAuthors { get; set; } = new List<BookAuthorDto>();
     public ICollection<UserBookReservations> BookReservations { get; set; } = new List<UserBookReservations>();
 }

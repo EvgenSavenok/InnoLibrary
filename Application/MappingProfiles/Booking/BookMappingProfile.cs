@@ -1,5 +1,7 @@
-﻿using Application.DTO.Booking.BookDto;
+﻿using Application.DTO.Booking.AuthorDto;
+using Application.DTO.Booking.BookDto;
 using Application.UseCases.Booking.Commands.BookCommands.CreateBook;
+using Application.UseCases.Booking.Commands.BookCommands.UpdateBook;
 using Domain.Entities.Booking;
 
 namespace Application.MappingProfiles.Booking;
@@ -17,46 +19,7 @@ public static class BookMapper
             Description = command.BookDto.Description,
             GenreType = command.BookDto.GenreType,
             Amount = command.BookDto.Amount,
-            BookAuthors = command.BookDto.BookAuthors
-                .Select(authorDto => new Author
-                {
-                    Id = authorDto.Id,
-                    FirstName = authorDto.FirstName,
-                    LastName = authorDto.LastName
-                })
-                .ToList(),
             BookReservations = command.BookDto.BookReservations
-                .Select(reservationDto => new UserBookReservations
-                {
-                    Id = reservationDto.Id,
-                    UserId = reservationDto.UserId,
-                    BookId = reservationDto.BookId,
-                    ReservationDate = DateTime.UtcNow
-                })
-                .ToList()
-        };
-    }
-
-    public static Book DtoToEntity(BookDto bookDto)
-    {
-        return new Book
-        {
-            Id = bookDto.Id,
-            UserId = bookDto.UserId,
-            ISBN = bookDto.ISBN,
-            BookTitle = bookDto.BookTitle,
-            Description = bookDto.Description,
-            GenreType = bookDto.GenreType,
-            Amount = bookDto.Amount,
-            BookAuthors = bookDto.BookAuthors
-                .Select(authorDto => new Author
-                {
-                    Id = authorDto.Id,
-                    FirstName = authorDto.FirstName,
-                    LastName = authorDto.LastName
-                })
-                .ToList(),
-            BookReservations = bookDto.BookReservations
                 .Select(reservationDto => new UserBookReservations
                 {
                     Id = reservationDto.Id,
@@ -79,9 +42,9 @@ public static class BookMapper
             GenreType = book.GenreType,
             Amount = book.Amount,
             BookAuthors = book.BookAuthors
-                .Select(authorDto => new Author
+                .Select(authorDto => new BookAuthorDto()
                 {
-                    Id = authorDto.Id,
+                    AuthorId = authorDto.AuthorId,
                     FirstName = authorDto.FirstName,
                     LastName = authorDto.LastName
                 })
@@ -101,5 +64,24 @@ public static class BookMapper
     public static IEnumerable<BookDto> EntitiesToDtos(IEnumerable<Book> books)
     {
         return books.Select(EntityToDto);
+    }
+
+    public static void CommandToEntityInUpdate(UpdateBookCommand command, ref Book book)
+    {
+        book.Id = command.BookDto.Id;
+        book.BookTitle = command.BookDto.BookTitle;
+        book.ISBN = command.BookDto.ISBN;
+        book.Description = command.BookDto.Description;
+        book.Amount = command.BookDto.Amount;
+        book.GenreType = command.BookDto.GenreType;
+        book.BookReservations = command.BookDto.BookReservations
+            .Select(reservationDto => new UserBookReservations
+            {
+                Id = reservationDto.Id,
+                UserId = reservationDto.UserId,
+                BookId = reservationDto.BookId,
+                ReservationDate = DateTime.UtcNow
+            })
+            .ToList();
     }
 }
