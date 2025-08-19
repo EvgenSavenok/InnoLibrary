@@ -56,15 +56,13 @@ public abstract class BaseRepository<T>(BookingContext bookingContext) : IBaseRe
 
         return await query.ToListAsync(cancellationToken);
     }
-    
+
     public async Task CreateAsync(T entity, CancellationToken cancellationToken = default)
-    
-    public async Task Create(T entity, CancellationToken cancellationToken = default)
     {
         await bookingContext.Set<T>().AddAsync(entity, cancellationToken); 
         await bookingContext.SaveChangesAsync(cancellationToken);
     }
-
+    
     public async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
     {
         bookingContext.Set<T>().Update(entity); 

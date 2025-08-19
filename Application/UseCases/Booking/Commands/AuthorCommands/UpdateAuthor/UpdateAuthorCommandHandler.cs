@@ -21,7 +21,7 @@ public class UpdateAuthorCommandHandler(
 
         AuthorMapper.CommandToEntityInUpdate(request, ref authorEntity);
         
-        await unitOfWork.AuthorRepository.Update(authorEntity, cancellationToken);
+        await unitOfWork.AuthorRepository.UpdateAsync(authorEntity, cancellationToken);
         
         return Unit.Value;
     }

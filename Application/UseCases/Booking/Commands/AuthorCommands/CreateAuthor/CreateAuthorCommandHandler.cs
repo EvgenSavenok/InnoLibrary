@@ -13,7 +13,7 @@ public class CreateAuthorCommandHandler (
     {
         var authorEntity = AuthorMapper.CommandToEntity(request);
         
-        await unitOfWork.AuthorRepository.Create(authorEntity,  cancellationToken);
+        await unitOfWork.AuthorRepository.CreateAsync(authorEntity,  cancellationToken);
         
         return authorEntity;
     }
