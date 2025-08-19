@@ -35,10 +35,9 @@ public class AuthorRepository(BookingContext bookingContext)
 
         var totalCount = await query.CountAsync(cancellationToken);
 
-        var items = await query
-            .Skip((parameters.PageNumber - 1) * parameters.PageSize)
-            .Take(parameters.PageSize)
-            .ToListAsync(cancellationToken);
+        query = query.Paging(1, 10);
+        
+        var items = await query.ToListAsync(cancellationToken);
 
         return new PagedResult<Author>
         {

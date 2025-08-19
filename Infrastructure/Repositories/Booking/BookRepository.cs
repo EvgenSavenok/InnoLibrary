@@ -38,11 +38,10 @@ public class BookRepository(BookingContext bookingContext)
         }
 
         var totalCount = await query.CountAsync(cancellationToken);
-
-        var items = await query
-            .Skip((parameters.PageNumber - 1) * parameters.PageSize)
-            .Take(parameters.PageSize)
-            .ToListAsync(cancellationToken);
+        
+        query = query.Paging(1, 10);
+        
+        var items = await query.ToListAsync(cancellationToken);
 
         return new PagedResult<Book>
         {
@@ -57,28 +56,12 @@ public class BookRepository(BookingContext bookingContext)
         int bookId,
         CancellationToken cancellationToken)
     {
-        var books = await FindByConditionTracked(
+        var books = await FindByConditionTrackedAsync(
             book => book.Id == bookId,
             cancellationToken,
             book => book.BookAuthors,
             book => book.BookReservations);
 
         return books.FirstOrDefault();
-    }
-    
-    public async Task<IEnumerable<Book>> GetAllBooksAsync(
-        CancellationToken cancellationToken,
-        int pageNumber = 1,
-        int pageSize = 10,
-        Func<IQueryable<Book>, IOrderedQueryable<Book>>? orderBy = null)
-    {
-        IQueryable<Book> query = bookingContext.Set<Book>().AsNoTracking();
-        
-        if (orderBy != null)
-            query = orderBy(query);
-
-        query = query.Paging(1, 10);
-
-        return await query.ToListAsync(cancellationToken);
     }
 }

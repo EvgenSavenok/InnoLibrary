@@ -20,7 +20,7 @@ public class DeleteBookCommandHandler(
             throw new NotFoundException($"Book with id {bookId} was not found");
         }
 
-        await unitOfWork.BookRepository.Delete(bookEntity, cancellationToken);
+        await unitOfWork.BookRepository.DeleteAsync(bookEntity, cancellationToken);
         
         return Unit.Value;
     }

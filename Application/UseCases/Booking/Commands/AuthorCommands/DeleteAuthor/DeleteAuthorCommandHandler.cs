@@ -18,7 +18,7 @@ public class DeleteAuthorCommandHandler(
             throw new NotFoundException($"Author with id {authorId} not found");
         }
 
-        await unitOfWork.AuthorRepository.Delete(authorEntity, cancellationToken);
+        await unitOfWork.AuthorRepository.DeleteAsync(authorEntity, cancellationToken);
         
         return Unit.Value;
     }

@@ -9,7 +9,7 @@ public interface IBaseRepository<T>
         CancellationToken cancellationToken,
         params Expression<Func<T, object>>[] includes);
 
-    public Task<IEnumerable<T>> FindByConditionTracked(
+    public Task<IEnumerable<T>> FindByConditionTrackedAsync(
         Expression<Func<T, bool>> expression,
         CancellationToken cancellationToken,
         params Expression<Func<T, object>>[] includes);
@@ -18,5 +18,5 @@ public interface IBaseRepository<T>
     
     Task UpdateAsync(T entity, CancellationToken cancellationToken);
     
-    Task Delete(T entity, CancellationToken cancellationToken);
+    Task DeleteAsync(T entity, CancellationToken cancellationToken);
 }

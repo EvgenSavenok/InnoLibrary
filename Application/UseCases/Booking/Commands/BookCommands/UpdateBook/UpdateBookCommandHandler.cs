@@ -24,7 +24,7 @@ public class UpdateBookCommandHandler(
         
         BookMapper.CommandToEntityInUpdate(request, ref bookEntity);
 
-        var authorsToAdd = (await unitOfWork.AuthorRepository.FindByConditionTracked(
+        var authorsToAdd = (await unitOfWork.AuthorRepository.FindByConditionTrackedAsync(
              author => request.BookDto.AuthorIds.Contains(author.AuthorId),
              cancellationToken)).ToList();
         bookEntity.BookAuthors = authorsToAdd;

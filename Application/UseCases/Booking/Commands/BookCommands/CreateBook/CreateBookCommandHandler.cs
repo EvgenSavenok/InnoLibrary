@@ -14,7 +14,7 @@ public class CreateBookCommandHandler(
         var bookEntity = BookMapper.CommandToEntity(request);
         
         var existingAuthors = (await unitOfWork.AuthorRepository
-                .FindByConditionTracked(
+                .FindByConditionTrackedAsync(
                     author => request.BookDto.AuthorIds.Contains(author.AuthorId), 
                     cancellationToken))
             .ToList();

@@ -15,7 +15,7 @@ namespace Presentation.Controllers.Booking;
 public class AuthorController(IMediator mediator) : Controller
 {
     [HttpGet("getAuthorById/{authorId}")]
-    public async Task<IActionResult> GetBookById(int authorId, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetBookByIdAsync(int authorId, CancellationToken cancellationToken)
     {
         var query = new GetAuthorByIdQuery(authorId) { AuthorId = authorId };
         var author =  await mediator.Send(query, cancellationToken);
@@ -24,7 +24,7 @@ public class AuthorController(IMediator mediator) : Controller
     }
     
     [HttpGet("getAllAuthors")]
-    public async Task<IActionResult> GetAllAuthors(
+    public async Task<IActionResult> GetAllAuthorsAsync(
         [FromQuery] AuthorQueryParameters parameters, 
         CancellationToken cancellationToken)
     {
@@ -35,7 +35,7 @@ public class AuthorController(IMediator mediator) : Controller
     }
     
     [HttpPost("addAuthor")]
-    public async Task<IActionResult> AddAuthor(
+    public async Task<IActionResult> AddAuthorAsync(
         [FromBody]AuthorDto authorDto, 
         CancellationToken cancellationToken)
     {
@@ -49,7 +49,7 @@ public class AuthorController(IMediator mediator) : Controller
     }
 
     [HttpPut("updateAuthor/{authorId}")]
-    public async Task<IActionResult> UpdateAuthor(
+    public async Task<IActionResult> UpdateAuthorAsync(
         [FromBody] AuthorDto authorDto,
         int authorId,
         CancellationToken cancellationToken)
@@ -66,7 +66,7 @@ public class AuthorController(IMediator mediator) : Controller
     }
 
     [HttpDelete("deleteAuthor/{authorId}")]
-    public async Task<IActionResult> DeleteAuthor(
+    public async Task<IActionResult> DeleteAuthorAsync(
         int authorId,
         CancellationToken cancellationToken)
     {
