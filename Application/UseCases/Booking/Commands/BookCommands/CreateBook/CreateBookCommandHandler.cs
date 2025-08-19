@@ -20,7 +20,7 @@ public class CreateBookCommandHandler(
             .ToList();
         bookEntity.BookAuthors = existingAuthors;
 
-        await unitOfWork.BookRepository.Create(bookEntity, cancellationToken);
+        await unitOfWork.BookRepository.CreateAsync(bookEntity, cancellationToken);
 
         return new CreateBookResponseDto { BookId = bookEntity.Id };
     }

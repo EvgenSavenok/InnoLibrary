@@ -11,10 +11,15 @@ public abstract class BaseRepository<T>(BookingContext bookingContext) : IBaseRe
     public virtual async Task<IEnumerable<T>> FindAll(
         CancellationToken cancellationToken)
     {
-        return await bookingContext.Set<T>().AsNoTracking().ToListAsync(cancellationToken);
+        return await FindAllQuery().ToListAsync(cancellationToken);
+    }
+
+    public IQueryable<T> FindAllQuery()
+    {
+        return bookingContext.Set<T>().AsNoTracking();
     }
     
-    public async Task<IEnumerable<T>> FindByCondition(
+    public async Task<IEnumerable<T>> FindByConditionAsync(
         Expression<Func<T, bool>> expression,
         CancellationToken cancellationToken,
         params Expression<Func<T, object>>[] includes)
@@ -52,6 +57,7 @@ public abstract class BaseRepository<T>(BookingContext bookingContext) : IBaseRe
         return await query.ToListAsync(cancellationToken);
     }
     
+    public async Task CreateAsync(T entity, CancellationToken cancellationToken = default)
     
     public async Task Create(T entity, CancellationToken cancellationToken = default)
     {
@@ -59,7 +65,7 @@ public abstract class BaseRepository<T>(BookingContext bookingContext) : IBaseRe
         await bookingContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task Update(T entity, CancellationToken cancellationToken = default)
+    public async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
     {
         bookingContext.Set<T>().Update(entity); 
         await bookingContext.SaveChangesAsync(cancellationToken);

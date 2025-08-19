@@ -11,13 +11,15 @@ public class UpdateBookCommandHandler(
 {
     public async Task<Unit> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
     {
-        var bookEntity = await unitOfWork.BookRepository.GetTrackedBookByIdAsync(
-            request.BookDto.Id,
+        var bookId = request.BookDto.Id;
+
+        var bookEntity = await unitOfWork.BookRepository.GetBookByIdAsync(
+            bookId,
             cancellationToken);
 
         if (bookEntity == null)
         {
-            throw new NotFoundException($"Book with id {request.BookDto.Id} not found.");
+            throw new NotFoundException($"Book with id {bookId} not found.");
         }
         
         BookMapper.CommandToEntityInUpdate(request, ref bookEntity);
@@ -26,9 +28,9 @@ public class UpdateBookCommandHandler(
              author => request.BookDto.AuthorIds.Contains(author.AuthorId),
              cancellationToken)).ToList();
         bookEntity.BookAuthors = authorsToAdd;
-
-        await unitOfWork.BookRepository.Update(bookEntity, cancellationToken);
-
+        
+        await unitOfWork.BookRepository.UpdateAsync(bookEntity, cancellationToken);
+        
         return Unit.Value;
     }
 }
