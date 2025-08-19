@@ -10,10 +10,16 @@ namespace Infrastructure.Extensions;
 
 public static class DbExtension
 {
-    public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration)
+    public static void ConfigureBookingSqlContext(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<BookingContext>(opts =>
-            opts.UseNpgsql(configuration.GetConnectionString("sqlConnection")));
+            opts.UseNpgsql(configuration.GetConnectionString("bookingConnection")));
+    }
+    
+    public static void ConfigureUserSqlContext(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddDbContext<UserContext>(opts =>
+            opts.UseNpgsql(configuration.GetConnectionString("userConnection")));
     }
 
     public static void ConfigureUnitOfWork(this IServiceCollection services) =>
@@ -22,7 +28,11 @@ public static class DbExtension
     public static void ApplyMigrations(this IApplicationBuilder app)
     {
         using var scope = app.ApplicationServices.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<BookingContext>();
-        dbContext.Database.Migrate();
+        
+        var bookingContext = scope.ServiceProvider.GetRequiredService<BookingContext>();
+        bookingContext.Database.Migrate();
+        
+        var userContext = scope.ServiceProvider.GetRequiredService<UserContext>();
+        userContext.Database.Migrate();
     }
 }

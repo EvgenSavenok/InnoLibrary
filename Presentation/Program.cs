@@ -3,7 +3,8 @@ using Infrastructure.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.ConfigureSqlContext(builder.Configuration);
+builder.Services.ConfigureBookingSqlContext(builder.Configuration);
+builder.Services.ConfigureUserSqlContext(builder.Configuration);
 builder.Services.ConfigureUnitOfWork();
 builder.Services.ConfigureRateLimiting();
 builder.Services.ConfigureSwagger();
