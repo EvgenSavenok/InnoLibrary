@@ -4,16 +4,19 @@ namespace Application.Contracts.RepositoryContracts.Booking;
 
 public interface IBaseRepository<T>
 {
-    public Task<IEnumerable<T>> FindAll(CancellationToken cancellationToken);
-    
-    public Task<IEnumerable<T>> FindByCondition(
+    public Task<IEnumerable<T>> FindByConditionAsync(
+        Expression<Func<T, bool>> expression,
+        CancellationToken cancellationToken,
+        params Expression<Func<T, object>>[] includes);
+
+    public Task<IEnumerable<T>> FindByConditionTrackedAsync(
         Expression<Func<T, bool>> expression,
         CancellationToken cancellationToken,
         params Expression<Func<T, object>>[] includes);
     
-    Task Create(T entity, CancellationToken cancellationToken);
+    Task CreateAsync(T entity, CancellationToken cancellationToken);
     
-    Task Update(T entity, CancellationToken cancellationToken);
+    Task UpdateAsync(T entity, CancellationToken cancellationToken);
     
-    Task Delete(T entity, CancellationToken cancellationToken);
+    Task DeleteAsync(T entity, CancellationToken cancellationToken);
 }
