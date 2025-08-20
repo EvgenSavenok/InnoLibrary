@@ -18,5 +18,5 @@ public record BookDto
     public List<int> AuthorIds { get; set; } = new();
     
     public ICollection<BookAuthorDto> BookAuthors { get; set; } = new List<BookAuthorDto>();
-    public ICollection<UserBookReservations> BookReservations { get; set; } = new List<UserBookReservations>();
+    public ICollection<UserBookReservation> BookReservations { get; set; } = new List<UserBookReservation>();
 }

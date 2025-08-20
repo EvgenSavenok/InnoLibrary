@@ -1,4 +1,5 @@
 ﻿using Application.Contracts.RepositoryContracts.Booking;
+using Application.DTO.Booking.AuthorDto;
 using Application.MappingProfiles.Booking;
 using Domain.Entities.Booking;
 using MediatR;
@@ -7,14 +8,14 @@ namespace Application.UseCases.Booking.Commands.AuthorCommands.CreateAuthor;
 
 public class CreateAuthorCommandHandler (
     IUnitOfWork unitOfWork)
-    : IRequestHandler<CreateAuthorCommand, Author>
+    : IRequestHandler<CreateAuthorCommand, Unit>
 {
-    public async Task<Author> Handle(CreateAuthorCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(CreateAuthorCommand request, CancellationToken cancellationToken)
     {
         var authorEntity = AuthorMapper.CommandToEntity(request);
         
         await unitOfWork.AuthorRepository.CreateAsync(authorEntity,  cancellationToken);
         
-        return authorEntity;
+        return Unit.Value;
     }
 }

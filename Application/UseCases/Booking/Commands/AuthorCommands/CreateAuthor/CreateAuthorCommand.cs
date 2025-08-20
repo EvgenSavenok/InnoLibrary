@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.UseCases.Booking.Commands.AuthorCommands.CreateAuthor;
 
-public record CreateAuthorCommand : IRequest<Author>
+public record CreateAuthorCommand : IRequest<Unit>
 {
     public int AuthorId { get; set; }
     public AuthorDto AuthorDto { get; set; }

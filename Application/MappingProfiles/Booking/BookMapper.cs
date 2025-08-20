@@ -20,7 +20,7 @@ public static class BookMapper
             GenreType = command.BookDto.GenreType,
             Amount = command.BookDto.Amount,
             BookReservations = command.BookDto.BookReservations
-                .Select(reservationDto => new UserBookReservations
+                .Select(reservationDto => new UserBookReservation
                 {
                     Id = reservationDto.Id,
                     UserId = reservationDto.UserId,
@@ -50,7 +50,7 @@ public static class BookMapper
                 })
                 .ToList(),
             BookReservations = book.BookReservations
-                .Select(reservationDto => new UserBookReservations
+                .Select(reservationDto => new UserBookReservation
                 {
                     Id = reservationDto.Id,
                     UserId = reservationDto.UserId,
@@ -75,7 +75,7 @@ public static class BookMapper
         book.Amount = command.BookDto.Amount;
         book.GenreType = command.BookDto.GenreType;
         book.BookReservations = command.BookDto.BookReservations
-            .Select(reservationDto => new UserBookReservations
+            .Select(reservationDto => new UserBookReservation
             {
                 Id = reservationDto.Id,
                 UserId = reservationDto.UserId,

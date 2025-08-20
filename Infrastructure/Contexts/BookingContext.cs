@@ -9,7 +9,7 @@ public class BookingContext(DbContextOptions<BookingContext> options) : DbContex
     
     public DbSet<Author> Authors { get; set; }
     
-    public DbSet<UserBookReservations>  UserBookReservations { get; set; }
+    public DbSet<UserBookReservation>  UserBookReservations { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
