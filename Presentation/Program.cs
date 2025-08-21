@@ -8,6 +8,7 @@ builder.Services.ConfigureUserSqlContext(builder.Configuration);
 builder.Services.ConfigureUnitOfWork();
 builder.Services.ConfigureRateLimiting();
 builder.Services.ConfigureSwagger();
+builder.Services.AddValidators();
 
 builder.Services.AddMediatR(cfg =>
 {
