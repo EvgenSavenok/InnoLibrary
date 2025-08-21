@@ -11,11 +11,26 @@ services:
       POSTGRES_DB: BookingDb
     ports:
       - "5433:5432"
-    volumes:
-      - postgres_data_bookings:/var/lib/postgresql/data
     networks:
       - backend_network
+    volumes:
+      - postgres_data_bookings:/var/lib/postgresql/data
         
+  postgres-user:
+    image: postgres:latest
+    container_name: postgres-user
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1111
+      POSTGRES_DB: UserDb
+    ports:
+      - "5434:5432"
+    networks:
+      - backend_network
+    volumes:
+      - postgres_data_users:/var/lib/postgresql/data
+
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin
@@ -27,6 +42,7 @@ services:
       - "5050:80"
     depends_on:
       - postgres-booking
+      - postgres-user
     networks:
       - backend_network
 
@@ -36,3 +52,4 @@ networks:
     
 volumes:
   postgres_data_bookings:
+  postgres_data_users:
