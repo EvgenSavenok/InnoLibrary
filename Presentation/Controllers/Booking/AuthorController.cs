@@ -43,9 +43,9 @@ public class AuthorController(IMediator mediator) : Controller
         {
             AuthorDto = authorDto
         };
-        var createdAuthorDto = await mediator.Send(command, cancellationToken);
+        await mediator.Send(command, cancellationToken);
         
-        return Ok(createdAuthorDto.AuthorId.ToString());
+        return NoContent();
     }
 
     [HttpPut("updateAuthor/{authorId}")]

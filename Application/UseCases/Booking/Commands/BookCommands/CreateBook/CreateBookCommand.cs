@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.UseCases.Booking.Commands.BookCommands.CreateBook;
 
-public record CreateBookCommand : IRequest<CreateBookResponseDto>
+public record CreateBookCommand : IRequest<Unit>
 {
     public BookDto BookDto { get; set; }
 }

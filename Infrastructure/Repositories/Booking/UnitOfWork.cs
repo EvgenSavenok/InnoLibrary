@@ -28,4 +28,14 @@ public class UnitOfWork(BookingContext bookingContext) : IUnitOfWork
             return _authorRepository;
         }
     }
+    
+    public IReservationRepository ReservationRepository
+    {
+        get
+        {
+            if (_reservationRepository == null)
+                _reservationRepository = new ReservationRepository(bookingContext);
+            return _reservationRepository;
+        }
+    }
 }
