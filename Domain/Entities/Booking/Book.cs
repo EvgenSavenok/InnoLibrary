@@ -17,5 +17,5 @@ public class Book
     [JsonIgnore]
     public ICollection<Author> BookAuthors { get; set; } = new List<Author>();
     [JsonIgnore]
-    public ICollection<UserBookReservations> BookReservations { get; set; } = new List<UserBookReservations>();
+    public ICollection<UserBookReservation> BookReservations { get; set; } = new List<UserBookReservation>();
 }

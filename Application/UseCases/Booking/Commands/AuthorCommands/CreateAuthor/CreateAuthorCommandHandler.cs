@@ -9,9 +9,9 @@ namespace Application.UseCases.Booking.Commands.AuthorCommands.CreateAuthor;
 public class CreateAuthorCommandHandler (
     IUnitOfWork unitOfWork,
     IValidator<Author> validator)
-    : IRequestHandler<CreateAuthorCommand, Author>
+    : IRequestHandler<CreateAuthorCommand, Unit>
 {
-    public async Task<Author> Handle(CreateAuthorCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(CreateAuthorCommand request, CancellationToken cancellationToken)
     {
         var authorEntity = AuthorMapper.CommandToEntity(request);
 
@@ -23,6 +23,6 @@ public class CreateAuthorCommandHandler (
         
         await unitOfWork.AuthorRepository.CreateAsync(authorEntity,  cancellationToken);
         
-        return authorEntity;
+        return Unit.Value;
     }
 }

@@ -14,7 +14,6 @@ public class GetAuthorByIdQueryHandler(
         int authorId = request.AuthorId;
         
         var authorEntity = await unitOfWork.AuthorRepository.GetAuthorByIdAsync(authorId, cancellationToken);
-
         if (authorEntity == null)
         {
             throw new NotFoundException($"Author with id {authorId} not found.");

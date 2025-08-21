@@ -1,5 +1,4 @@
 ﻿using Application.Contracts.RepositoryContracts.Booking;
-using Application.DTO.Booking.BookDto;
 using Application.MappingProfiles.Booking;
 using Domain.Entities.Booking;
 using FluentValidation;
@@ -10,9 +9,9 @@ namespace Application.UseCases.Booking.Commands.BookCommands.CreateBook;
 public class CreateBookCommandHandler(
     IUnitOfWork unitOfWork,
     IValidator<Book> bookValidator)
-    : IRequestHandler<CreateBookCommand, CreateBookResponseDto>
+    : IRequestHandler<CreateBookCommand, Unit>
 {
-    public async Task<CreateBookResponseDto> Handle(CreateBookCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(CreateBookCommand request, CancellationToken cancellationToken)
     {
         var bookEntity = BookMapper.CommandToEntity(request);
         
@@ -31,6 +30,6 @@ public class CreateBookCommandHandler(
 
         await unitOfWork.BookRepository.CreateAsync(bookEntity, cancellationToken);
 
-        return new CreateBookResponseDto { BookId = bookEntity.Id };
+        return Unit.Value;
     }
 }

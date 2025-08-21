@@ -41,9 +41,9 @@ public class BookController(IMediator mediator): Controller
         {
             BookDto = bookDto
         };
-        var createBookResponse = await mediator.Send(command);
-        
-        return Ok(createBookResponse.BookId.ToString());
+        await mediator.Send(command);
+
+        return NoContent();
     }
     
     [HttpPut("updateBook")]
