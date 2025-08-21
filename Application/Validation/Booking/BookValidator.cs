@@ -26,8 +26,5 @@ public class BookValidator : AbstractValidator<Book>
 
         RuleFor(book => book.GenreType)
             .NotEmpty().WithMessage("Book genre must not be empty");
-        
-        RuleFor(book => book.BookAuthors)
-            .NotEmpty().WithMessage("Book authors must not be empty");
     }
 }
