@@ -10,5 +10,6 @@ public static class ValidationExtensions
     {
         services.AddValidatorsFromAssemblyContaining<BookValidator>();
         services.AddValidatorsFromAssemblyContaining<AuthorValidator>();
+        services.AddValidatorsFromAssemblyContaining<ReservationValidator>();
     }
 }

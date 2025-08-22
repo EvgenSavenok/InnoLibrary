@@ -4,6 +4,7 @@ using Application.UseCases.Booking.Commands.ReservationCommands.UpdateReservatio
 using Domain.Entities.Booking;
 using Domain.ErrorHandlers;
 using FluentAssertions;
+using FluentValidation;
 using MediatR;
 using Moq;
 
@@ -13,11 +14,13 @@ public class UpdateReservation
 {
     private readonly Mock<IUnitOfWork> _unitOfWorkMock;
     private readonly UpdateReservationCommandHandler _handler;
+    private readonly Mock<IValidator<UserBookReservation>> _validatorMock;
 
     public UpdateReservation()
     {
         _unitOfWorkMock = new Mock<IUnitOfWork>();
-        _handler = new UpdateReservationCommandHandler(_unitOfWorkMock.Object);
+        _validatorMock = new Mock<IValidator<UserBookReservation>>();
+        _handler = new UpdateReservationCommandHandler(_unitOfWorkMock.Object,  _validatorMock.Object);
     }
 
     [Fact]

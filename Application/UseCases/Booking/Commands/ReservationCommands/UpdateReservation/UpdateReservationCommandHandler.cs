@@ -1,12 +1,15 @@
 ﻿using Application.Contracts.RepositoryContracts.Booking;
 using Application.MappingProfiles.Booking;
+using Domain.Entities.Booking;
 using Domain.ErrorHandlers;
+using FluentValidation;
 using MediatR;
 
 namespace Application.UseCases.Booking.Commands.ReservationCommands.UpdateReservation;
 
 public class UpdateReservationCommandHandler(
-    IUnitOfWork unitOfWork) : IRequestHandler<UpdateReservationCommand, Unit>
+    IUnitOfWork unitOfWork,
+    IValidator<UserBookReservation> reservationValidator) : IRequestHandler<UpdateReservationCommand, Unit>
 {
     public async Task<Unit> Handle(UpdateReservationCommand request, CancellationToken cancellationToken)
     {
@@ -16,6 +19,12 @@ public class UpdateReservationCommandHandler(
         if (reservationEntity == null)
         {
             throw new NotFoundException($"Reservation with id {reservationId} not found");
+        }
+        
+        var validationResult = await reservationValidator.ValidateAsync(reservationEntity, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            throw new ValidationException(validationResult.Errors);
         }
 
         ReservationMapper.CommandToEntityInUpdate(request, ref reservationEntity);
