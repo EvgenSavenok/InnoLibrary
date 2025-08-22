@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <Folder Include="Contracts\Repository\" />
+      <Folder Include="UseCases\User\Commands\UserCommands\" />
     </ItemGroup>
 
     <ItemGroup>
