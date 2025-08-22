@@ -36,6 +36,11 @@ public class CreateReservation
                     bookEntity.Id, 
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(bookEntity);
+            
+            _validatorMock.Setup(validator => validator.ValidateAsync(
+                    It.IsAny<UserBookReservation>(), 
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new FluentValidation.Results.ValidationResult());
 
             _unitOfWorkMock.Setup(unitOfWork => unitOfWork.ReservationRepository.CreateAsync(
                     It.IsAny<UserBookReservation>(), 
@@ -74,6 +79,11 @@ public class CreateReservation
                     reservationDto.BookId, 
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync((Domain.Entities.Booking.Book)null!);
+            
+            _validatorMock.Setup(validator => validator.ValidateAsync(
+                    It.IsAny<UserBookReservation>(), 
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new FluentValidation.Results.ValidationResult());
 
             _unitOfWorkMock.Setup(r => r.ReservationRepository.CreateAsync(
                     It.IsAny<UserBookReservation>(), 
