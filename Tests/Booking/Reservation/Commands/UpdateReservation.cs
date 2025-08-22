@@ -54,6 +54,11 @@ public class UpdateReservation
                 existingReservation, 
                 It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
+        
+        _validatorMock.Setup(validator => validator.ValidateAsync(
+                It.IsAny<UserBookReservation>(), 
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new FluentValidation.Results.ValidationResult());
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
@@ -76,6 +81,11 @@ public class UpdateReservation
                 reservationId, 
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync((UserBookReservation)null!);
+        
+        _validatorMock.Setup(validator => validator.ValidateAsync(
+                It.IsAny<UserBookReservation>(), 
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new FluentValidation.Results.ValidationResult());
 
         // Act
         var act = async () => await _handler.Handle(command, CancellationToken.None);
