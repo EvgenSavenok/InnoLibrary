@@ -21,7 +21,7 @@ public class GetAllBooks
     }
     
     [Fact]
-    public async Task Handle_ReturnsEmptyList_WhenNoBooksExist()
+    public async Task Handle_GetAllBooks_ReturnsEmptyResult()
     {
         // Arrange
         var query = new GetAllBooksQuery();
@@ -46,14 +46,14 @@ public class GetAllBooks
     }
     
     [Fact]
-    public async Task Handle_ReturnsAllBooks_WhenBooksExist()
+    public async Task Handle_GetAllBooks_ReturnsPaginatedResult()
     {
         // Arrange
         var query = new GetAllBooksQuery();
 
         var books = new List<Domain.Entities.Booking.Book>
         {
-            new Domain.Entities.Booking.Book
+            new()
             {
                 Id = 1,
                 ISBN = "1234567890",
@@ -62,7 +62,7 @@ public class GetAllBooks
                 Description = "Description 1",
                 Amount = 5
             },
-            new Domain.Entities.Booking.Book()
+            new()
             {
                 Id = 2,
                 ISBN = "0987654321",

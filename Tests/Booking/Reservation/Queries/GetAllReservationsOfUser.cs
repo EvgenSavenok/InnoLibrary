@@ -7,19 +7,19 @@ using Moq;
 
 namespace Tests.Booking.Reservation.Queries;
 
-public class GetAllReservations
+public class GetAllReservationsOfUser
 {
     private readonly Mock<IUnitOfWork> _unitOfWorkMock;
         private readonly GetAllReservationsOfUserQueryHandler _handler;
 
-        public GetAllReservations()
+        public GetAllReservationsOfUser()
         {
             _unitOfWorkMock = new Mock<IUnitOfWork>();
             _handler = new GetAllReservationsOfUserQueryHandler(_unitOfWorkMock.Object);
         }
 
         [Fact]
-        public async Task Handle_ShouldReturnPagedResultOfReservations_WhenReservationsExist()
+        public async Task Handle_GetAllReservationsOfUser_ReturnsPaginatedResult()
         {
             // Arrange
             var query = new GetAllReservationsOfUserQuery
@@ -70,7 +70,7 @@ public class GetAllReservations
         }
 
         [Fact]
-        public async Task Handle_ShouldReturnEmptyPagedResult_WhenNoReservationsExist()
+        public async Task Handle_GetAllReservationsOfUser_ReturnsEmptyResult()
         {
             // Arrange
             var query = new GetAllReservationsOfUserQuery

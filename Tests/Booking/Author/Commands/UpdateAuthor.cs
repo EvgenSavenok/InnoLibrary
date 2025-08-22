@@ -24,7 +24,7 @@ public class UpdateAuthor
     }
 
     [Fact]
-    public async Task Handle_ShouldUpdateAuthor_WhenAuthorExistsAndValidationPasses()
+    public async Task Handle_UpdateAuthor_ReturnsUnitValue()
     {
         // Arrange
         var authorId = 1;
@@ -67,7 +67,7 @@ public class UpdateAuthor
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowNotFoundException_WhenAuthorDoesNotExist()
+    public async Task Handle_UpdateAuthor_ThrowsNotFoundException()
     {
         // Arrange
         var authorId = 42;
@@ -99,7 +99,7 @@ public class UpdateAuthor
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowValidationException_WhenValidationFails()
+    public async Task Handle_UpdateAuthor_ThrowsValidationException()
     {
         // Arrange
         var authorId = 5;

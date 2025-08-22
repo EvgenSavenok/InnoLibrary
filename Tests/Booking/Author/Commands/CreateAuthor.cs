@@ -22,7 +22,7 @@ public class CreateAuthor
     }
     
     [Fact]
-    public async Task Handle_ShouldCreateAuthor_WhenValidationPasses()
+    public async Task Handle_CreateAuthor_ReturnsUnitValue()
     {
         // Arrange
         var command = new CreateAuthorCommand
@@ -34,12 +34,12 @@ public class CreateAuthor
             }
         };
 
-        _validatorMock.Setup(v => v.ValidateAsync(
+        _validatorMock.Setup(validator => validator.ValidateAsync(
                 It.IsAny<Domain.Entities.Booking.Author>(), 
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(new FluentValidation.Results.ValidationResult());
 
-        _unitOfWorkMock.Setup(r => r.AuthorRepository.CreateAsync(
+        _unitOfWorkMock.Setup(unitOfWork => unitOfWork.AuthorRepository.CreateAsync(
                 It.IsAny<Domain.Entities.Booking.Author>(), 
                 It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
@@ -57,7 +57,7 @@ public class CreateAuthor
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowValidationException_WhenValidationFails()
+    public async Task Handle_CreateAuthor_ThrowsValidationException()
     {
         // Arrange
         var command = new CreateAuthorCommand

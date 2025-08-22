@@ -21,7 +21,7 @@ public class UpdateReservation
     }
 
     [Fact]
-    public async Task Handle_ShouldUpdateReservation_WhenReservationExists()
+    public async Task Handle_UpdateReservationAndUpdateBookAmount_ReturnsUnitValue()
     {
         // Arrange
         var reservationId = 1;
@@ -63,7 +63,7 @@ public class UpdateReservation
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowNotFoundException_WhenReservationDoesNotExist()
+    public async Task Handle_UpdateReservationAndUpdateBookAmount_ThrowsReservationNotFoundException()
     {
         // Arrange
         var reservationId = 99;

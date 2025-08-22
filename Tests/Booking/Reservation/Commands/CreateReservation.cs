@@ -21,7 +21,7 @@ public class CreateReservation
         }
 
         [Fact]
-        public async Task Handle_ShouldCreateReservationAndUpdateBook_WhenBookExistsAndAmountPositive()
+        public async Task Handle_CreateReservationAndUpdateBookAmount_ReturnsUnitValueAndPositiveAmount()
         {
             // Arrange
             var reservationDto = new ReservationDto { BookId = 1, UserId = 1 };
@@ -61,7 +61,7 @@ public class CreateReservation
         }
 
         [Fact]
-        public async Task Handle_ShouldThrowNotFoundException_WhenBookDoesNotExist()
+        public async Task Handle_CreateReservationAndUpdateBookAmount_ThrowsNotFoundException()
         {
             // Arrange
             var reservationDto = new ReservationDto { BookId = 99, UserId = 1 };
@@ -90,7 +90,7 @@ public class CreateReservation
         }
 
         [Fact]
-        public async Task Handle_ShouldNotUpdateBook_WhenAmountAfterDecrementIsZeroOrNegative()
+        public async Task Handle_CreateReservationAndUpdateBookAmount_ReturnsUnitValueAndZeroAmount()
         {
             // Arrange
             var reservationDto = new ReservationDto {BookId = 1, UserId = 1 };

@@ -20,7 +20,7 @@ public class DeleteAuthor
     }
 
     [Fact]
-    public async Task Handle_ShouldDeleteAuthor_WhenAuthorExists()
+    public async Task Handle_DeleteAuthor_ReturnsUnitValue()
     {
         // Arrange
         var authorId = 1;
@@ -53,7 +53,7 @@ public class DeleteAuthor
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowNotFoundException_WhenAuthorDoesNotExist()
+    public async Task Handle_CreateAuthor_ThrowsNotFoundException()
     {
         // Arrange
         var authorId = 42;

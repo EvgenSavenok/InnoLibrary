@@ -19,7 +19,7 @@ public class DeleteBook
     }
     
     [Fact]
-    public async Task Handle_ShouldDeleteBook_WhenBookExists()
+    public async Task Handle_DeleteBook_ReturnsUnitValue()
     {
         // Arrange
         var command = new DeleteBookCommand { BookId = 1 };
@@ -53,7 +53,7 @@ public class DeleteBook
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowNotFoundException_WhenBookDoesNotExist()
+    public async Task Handle_DeleteBook_ThrowsNotFoundException()
     {
         // Arrange
         var command = new DeleteBookCommand { BookId = 99 };
@@ -74,5 +74,4 @@ public class DeleteBook
             It.IsAny<Domain.Entities.Booking.Book>(), 
             It.IsAny<CancellationToken>()), Times.Never);
     }
-
 }

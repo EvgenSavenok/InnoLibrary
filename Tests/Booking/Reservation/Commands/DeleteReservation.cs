@@ -20,7 +20,7 @@ public class DeleteReservation
         }
 
         [Fact]
-        public async Task Handle_ShouldDeleteReservationAndUpdateBook_WhenReservationAndBookExist()
+        public async Task Handle_DeleteReservationAndUpdateBookAmount_ReturnsUnitValue()
         {
             // Arrange
             var reservationId = 1;
@@ -48,7 +48,7 @@ public class DeleteReservation
         }
 
         [Fact]
-        public async Task Handle_ShouldThrowNotFoundException_WhenReservationDoesNotExist()
+        public async Task Handle_CreateBookReservationAndUpdateBookAmount_ThrowsReservationNotFoundException()
         {
             // Arrange
             var reservationId = 99;
@@ -67,7 +67,7 @@ public class DeleteReservation
         }
 
         [Fact]
-        public async Task Handle_ShouldThrowNotFoundException_WhenBookDoesNotExist()
+        public async Task Handle_CreateBookReservationAndUpdateBookAmount_ThrowsBookNotFoundException()
         {
             // Arrange
             var reservationId = 1;
@@ -83,7 +83,7 @@ public class DeleteReservation
 
             // Assert
             await act.Should().ThrowAsync<NotFoundException>()
-                .WithMessage($"Book with id 99 not found");
+                .WithMessage("Book with id 99 not found");
 
             _unitOfWorkMock.Verify(r => r.ReservationRepository.DeleteAsync(It.IsAny<UserBookReservation>(), It.IsAny<CancellationToken>()), Times.Once);
             _unitOfWorkMock.Verify(r => r.BookRepository.UpdateAsync(It.IsAny<Domain.Entities.Booking.Book>(), It.IsAny<CancellationToken>()), Times.Never);

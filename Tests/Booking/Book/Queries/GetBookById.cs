@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Application.Contracts.RepositoryContracts.Booking;
+﻿using Application.Contracts.RepositoryContracts.Booking;
 using Application.DTO.Booking.BookDto;
 using Application.UseCases.Booking.Queries.BookQueries.GetBookById;
 using Domain.Enums.Booking;
@@ -21,7 +20,7 @@ public class GetBookById
     }
 
     [Fact]
-    public async Task Handle_ReturnsBookFromRepository_WhenBookExists()
+    public async Task Handle_GetBookById_ReturnsBookDto()
     {
         // Arrange
         var bookId = Random.Shared.Next(1, Int32.MaxValue);

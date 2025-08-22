@@ -1,7 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Application.Contracts.RepositoryContracts.Booking;
 using Application.UseCases.Booking.Commands.BookCommands.UpdateBook;
-using Domain.Entities.Booking;
 using Domain.ErrorHandlers;
 using FluentAssertions;
 using FluentValidation;
@@ -24,7 +23,7 @@ public class UpdateBook
     }
     
     [Fact]
-    public async Task Handle_ShouldUpdateBook_WhenBookExistsAndValidationPasses()
+    public async Task Handle_UpdateBook_ReturnsUnitValue()
     {
         // Arrange
         var command = new UpdateBookCommand
@@ -89,7 +88,7 @@ public class UpdateBook
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowNotFoundException_WhenBookDoesNotExist()
+    public async Task Handle_UpdateBook_ReturnsNotFoundException()
     {
         // Arrange
         var command = new UpdateBookCommand
@@ -114,7 +113,7 @@ public class UpdateBook
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowValidationException_WhenValidationFails()
+    public async Task Handle_UpdateBook_ThrowsValidationException()
     {
         // Arrange
         var command = new UpdateBookCommand
