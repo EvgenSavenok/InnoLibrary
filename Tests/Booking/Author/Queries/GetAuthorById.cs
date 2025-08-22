@@ -18,7 +18,7 @@ public class GetAuthorById
         }
 
         [Fact]
-        public async Task Handle_GetAuthorById_ReturnsAuthor()
+        public async Task Handle_GetAuthorByExistingId_ReturnsAuthor()
         {
             // Arrange
             var authorId = 1;
@@ -51,7 +51,7 @@ public class GetAuthorById
         }
 
         [Fact]
-        public async Task Handle_GetAuthorById_ThrowsNotFoundException()
+        public async Task Handle_GetAuthorByNotExistingId_ThrowsNotFoundException()
         {
             // Arrange
             var authorId = 99;

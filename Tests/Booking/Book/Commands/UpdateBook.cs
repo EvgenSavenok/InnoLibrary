@@ -23,7 +23,7 @@ public class UpdateBook
     }
     
     [Fact]
-    public async Task Handle_UpdateBook_ReturnsUnitValue()
+    public async Task Handle_UpdateBookWithCorrectBookDtoAndExistingId_ReturnsUnitValue()
     {
         // Arrange
         var command = new UpdateBookCommand
@@ -88,7 +88,7 @@ public class UpdateBook
     }
 
     [Fact]
-    public async Task Handle_UpdateBook_ReturnsNotFoundException()
+    public async Task Handle_UpdateBookWithNotExistingBookId_ReturnsNotFoundException()
     {
         // Arrange
         var command = new UpdateBookCommand
@@ -113,7 +113,7 @@ public class UpdateBook
     }
 
     [Fact]
-    public async Task Handle_UpdateBook_ThrowsValidationException()
+    public async Task Handle_UpdateBookWithIncorrectBookDto_ThrowsValidationException()
     {
         // Arrange
         var command = new UpdateBookCommand

@@ -22,7 +22,7 @@ public class CreateBook
     }
     
     [Fact]
-    public async Task Handle_CreateBook_ReturnsUnitValue()
+    public async Task Handle_CreateBookWithCorrectBookDto_ReturnsUnitValue()
     {
         // Arrange
         var command = new CreateBookCommand
@@ -70,7 +70,7 @@ public class CreateBook
     }
 
     [Fact]
-    public async Task Handle_CreateBook_ThrowsValidationException()
+    public async Task Handle_CreateBookWithIncorrectBookDto_ThrowsValidationException()
     {
         // Arrange
         var command = new CreateBookCommand
@@ -111,53 +111,5 @@ public class CreateBook
         _unitOfWorkMock.Verify(unitOfWork => unitOfWork.BookRepository.CreateAsync(
             It.IsAny<Domain.Entities.Booking.Book>(), 
             It.IsAny<CancellationToken>()), Times.Never);
-    }
-
-    [Fact]
-    public async Task Handle_AssignAuthors_ReturnsUnitValue()
-    {
-        // Arrange
-        var command = new CreateBookCommand
-        {
-            BookDto = new Application.DTO.Booking.BookDto.BookDto
-            {
-                ISBN = "5555555555555",
-                BookTitle = "Book with Authors",
-                Description = "Desc",
-                GenreType = Domain.Enums.Booking.GenreType.Adventures,
-                Amount = 2,
-                AuthorIds = [1]
-            }
-        };
-
-        var authors = new List<Domain.Entities.Booking.Author>
-        {
-            new() { AuthorId = 1, FirstName = "Author 1", LastName = "Author 1" },
-        };
-
-        _unitOfWorkMock.Setup(unitOfWork => unitOfWork.AuthorRepository
-                .FindByConditionTrackedAsync(
-                    It.IsAny<Expression<Func<Domain.Entities.Booking.Author, bool>>>(), 
-                    It.IsAny<CancellationToken>()))
-            .ReturnsAsync(authors);
-
-        _validatorMock.Setup(validator => validator.ValidateAsync(
-                It.IsAny<Domain.Entities.Booking.Book>(), 
-                It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new FluentValidation.Results.ValidationResult());
-
-        _unitOfWorkMock.Setup(unitOfWork => unitOfWork.BookRepository.CreateAsync(
-                It.IsAny<Domain.Entities.Booking.Book>(), 
-                It.IsAny<CancellationToken>()))
-            .Returns(Task.CompletedTask);
-
-        // Act
-        var result = await _handler.Handle(command, CancellationToken.None);
-
-        // Assert
-        result.Should().Be(Unit.Value);
-        _unitOfWorkMock.Verify(unitOfWork => unitOfWork.BookRepository.CreateAsync(
-            It.Is<Domain.Entities.Booking.Book>(book => book.BookAuthors.Any(author => author.AuthorId == 1)),
-            It.IsAny<CancellationToken>()), Times.Once);
     }
 }

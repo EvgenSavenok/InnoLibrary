@@ -19,7 +19,7 @@ public class DeleteBook
     }
     
     [Fact]
-    public async Task Handle_DeleteBook_ReturnsUnitValue()
+    public async Task Handle_DeleteBookWithCorrectBookId_ReturnsUnitValue()
     {
         // Arrange
         var command = new DeleteBookCommand { BookId = 1 };
@@ -53,7 +53,7 @@ public class DeleteBook
     }
 
     [Fact]
-    public async Task Handle_DeleteBook_ThrowsNotFoundException()
+    public async Task Handle_DeleteBookWithIncorrectBookId_ThrowsNotFoundException()
     {
         // Arrange
         var command = new DeleteBookCommand { BookId = 99 };

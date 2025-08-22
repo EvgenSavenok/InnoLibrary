@@ -19,7 +19,7 @@ public class GetAllReservationsOfUser
         }
 
         [Fact]
-        public async Task Handle_GetAllReservationsOfUser_ReturnsPaginatedResult()
+        public async Task Handle_GetAllReservationsOfUserFromFilledTable_ReturnsPaginatedResult()
         {
             // Arrange
             var query = new GetAllReservationsOfUserQuery
@@ -70,7 +70,7 @@ public class GetAllReservationsOfUser
         }
 
         [Fact]
-        public async Task Handle_GetAllReservationsOfUser_ReturnsEmptyResult()
+        public async Task Handle_GetAllReservationsOfUserFromEmptyTable_ReturnsEmptyResult()
         {
             // Arrange
             var query = new GetAllReservationsOfUserQuery

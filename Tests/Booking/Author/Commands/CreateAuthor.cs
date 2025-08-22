@@ -22,7 +22,7 @@ public class CreateAuthor
     }
     
     [Fact]
-    public async Task Handle_CreateAuthor_ReturnsUnitValue()
+    public async Task Handle_CreateAuthorWithCorrectAuthorDto_ReturnsUnitValue()
     {
         // Arrange
         var command = new CreateAuthorCommand
@@ -57,7 +57,7 @@ public class CreateAuthor
     }
 
     [Fact]
-    public async Task Handle_CreateAuthor_ThrowsValidationException()
+    public async Task Handle_CreateAuthorWithIncorrectAuthorDto_ThrowsValidationException()
     {
         // Arrange
         var command = new CreateAuthorCommand

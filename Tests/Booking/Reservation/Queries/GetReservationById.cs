@@ -19,7 +19,7 @@ public class GetReservationById
     }
 
     [Fact]
-    public async Task Handle_GetReservationById_ReturnsReservation()
+    public async Task Handle_GetReservationByIdWithExistingId_ReturnsReservation()
     {
         // Arrange
         var reservationId = 1;
@@ -51,7 +51,7 @@ public class GetReservationById
     }
 
     [Fact]
-    public async Task Handle_GetReservationById_ThrowsNotFoundException()
+    public async Task Handle_GetReservationByNotExistingId_ThrowsNotFoundException()
     {
         // Arrange
         var reservationId = 99;

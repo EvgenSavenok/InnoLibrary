@@ -20,7 +20,7 @@ public class GetBookById
     }
 
     [Fact]
-    public async Task Handle_GetBookById_ReturnsBookDto()
+    public async Task Handle_GetBookByIdWithExistingBookId_ReturnsBookDto()
     {
         // Arrange
         var bookId = Random.Shared.Next(1, Int32.MaxValue);

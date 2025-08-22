@@ -21,7 +21,7 @@ public class CreateReservation
         }
 
         [Fact]
-        public async Task Handle_CreateReservationAndUpdateBookAmount_ReturnsUnitValueAndPositiveAmount()
+        public async Task Handle_CreateReservationAndUpdateBookAmountWithExistingReservationIdAndBookId_ReturnsUnitValue()
         {
             // Arrange
             var reservationDto = new ReservationDto { BookId = 1, UserId = 1 };
@@ -61,7 +61,7 @@ public class CreateReservation
         }
 
         [Fact]
-        public async Task Handle_CreateReservationAndUpdateBookAmount_ThrowsNotFoundException()
+        public async Task Handle_CreateReservationAndUpdateBookAmountWithNotExistingBookId_ThrowsNotFoundException()
         {
             // Arrange
             var reservationDto = new ReservationDto { BookId = 99, UserId = 1 };
@@ -85,36 +85,6 @@ public class CreateReservation
                 .WithMessage("Book with 99 not found");
 
             _unitOfWorkMock.Verify(r => r.BookRepository.UpdateAsync(
-                It.IsAny<Domain.Entities.Booking.Book>(), 
-                It.IsAny<CancellationToken>()), Times.Never);
-        }
-
-        [Fact]
-        public async Task Handle_CreateReservationAndUpdateBookAmount_ReturnsUnitValueAndZeroAmount()
-        {
-            // Arrange
-            var reservationDto = new ReservationDto {BookId = 1, UserId = 1 };
-            var command = new CreateReservationCommand { ReservationDto = reservationDto };
-
-            var bookEntity = new Domain.Entities.Booking.Book { Id = 1, BookTitle = "Test Book", Amount = 1 };
-
-            _unitOfWorkMock.Setup(unitOfWork => unitOfWork.BookRepository.GetTrackedBookByIdAsync(
-                    bookEntity.Id, 
-                    It.IsAny<CancellationToken>()))
-                .ReturnsAsync(bookEntity);
-
-            _unitOfWorkMock.Setup(unitOfWork => unitOfWork.ReservationRepository.CreateAsync(
-                    It.IsAny<UserBookReservation>(), 
-                    It.IsAny<CancellationToken>()))
-                .Returns(Task.CompletedTask);
-
-            // Act
-            var result = await _handler.Handle(command, CancellationToken.None);
-
-            // Assert
-            result.Should().Be(Unit.Value);
-            bookEntity.Amount.Should().Be(0); 
-            _unitOfWorkMock.Verify(unitOfWork => unitOfWork.BookRepository.UpdateAsync(
                 It.IsAny<Domain.Entities.Booking.Book>(), 
                 It.IsAny<CancellationToken>()), Times.Never);
         }

@@ -24,7 +24,7 @@ public class UpdateAuthor
     }
 
     [Fact]
-    public async Task Handle_UpdateAuthor_ReturnsUnitValue()
+    public async Task Handle_UpdateAuthorWithCorrectAuthorDtoAndExistingAuthorId_ReturnsUnitValue()
     {
         // Arrange
         var authorId = 1;
@@ -67,7 +67,7 @@ public class UpdateAuthor
     }
 
     [Fact]
-    public async Task Handle_UpdateAuthor_ThrowsNotFoundException()
+    public async Task Handle_UpdateAuthorWithNotExistingId_ThrowsNotFoundException()
     {
         // Arrange
         var authorId = 42;
@@ -99,7 +99,7 @@ public class UpdateAuthor
     }
 
     [Fact]
-    public async Task Handle_UpdateAuthor_ThrowsValidationException()
+    public async Task Handle_UpdateAuthorWithIncorrectAuthorDto_ThrowsValidationException()
     {
         // Arrange
         var authorId = 5;

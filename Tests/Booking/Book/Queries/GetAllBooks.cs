@@ -21,7 +21,7 @@ public class GetAllBooks
     }
     
     [Fact]
-    public async Task Handle_GetAllBooks_ReturnsEmptyResult()
+    public async Task Handle_GetAllBooksFromEmptyTable_ReturnsEmptyResult()
     {
         // Arrange
         var query = new GetAllBooksQuery();
@@ -46,7 +46,7 @@ public class GetAllBooks
     }
     
     [Fact]
-    public async Task Handle_GetAllBooks_ReturnsPaginatedResult()
+    public async Task Handle_GetAllBooksFromFilledTable_ReturnsPaginatedResult()
     {
         // Arrange
         var query = new GetAllBooksQuery();

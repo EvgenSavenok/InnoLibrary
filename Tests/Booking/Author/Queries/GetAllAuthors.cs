@@ -18,7 +18,7 @@ public class GetAllAuthors
     }
 
     [Fact]
-    public async Task Handle_GetAllAuthors_ReturnsPaginatedResult()
+    public async Task Handle_GetAllAuthorsFromFilledTable_ReturnsPaginatedResult()
     {
         // Arrange
         var query = new GetAllAuthorsQuery
@@ -62,7 +62,7 @@ public class GetAllAuthors
     }
 
     [Fact]
-    public async Task Handle_GetAllAuthors_ReturnsEmptyResult()
+    public async Task Handle_GetAllAuthorsFromEmptyTable_ReturnsEmptyResult()
     {
         // Arrange
         var query = new GetAllAuthorsQuery
