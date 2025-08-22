@@ -16,7 +16,6 @@ public class BookValidator : AbstractValidator<Book>
             .MaximumLength(255).WithMessage("Book title must not exceed 255 characters");
 
         RuleFor(book => book.Amount)
-            .NotEmpty().WithMessage("Book amount must not be empty")
             .GreaterThanOrEqualTo((Int16)0).WithMessage("Book amount must not be negative")
             .LessThanOrEqualTo(Int16.MaxValue).WithMessage("Book amount must be less than or equal to 32,767");
         
@@ -26,8 +25,5 @@ public class BookValidator : AbstractValidator<Book>
 
         RuleFor(book => book.GenreType)
             .NotEmpty().WithMessage("Book genre must not be empty");
-        
-        RuleFor(book => book.BookAuthors)
-            .NotEmpty().WithMessage("Book authors must not be empty");
     }
 }

@@ -10,6 +10,7 @@ builder.Services.ConfigureRateLimiting();
 builder.Services.ConfigureSwagger();
 builder.Services.AddValidators();
 
+builder.WebHost.UseUrls("http://0.0.0.0:5000"); 
 builder.Services.AddMediatR(cfg =>
 {
     var assemblies = AppDomain.CurrentDomain.GetAssemblies();
