@@ -22,7 +22,7 @@ public class UpdateReservation
         _validatorMock = new Mock<IValidator<UserBookReservation>>();
         _handler = new UpdateReservationCommandHandler(_unitOfWorkMock.Object,  _validatorMock.Object);
     }
-
+    
     [Fact]
     public async Task Handle_UpdateReservationAndUpdateBookAmount_ReturnsUnitValue()
     {

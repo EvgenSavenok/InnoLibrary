@@ -1,5 +1,7 @@
+using Application.Contracts.User;
 using Infrastructure.Extensions;
 using Infrastructure.Middlewares;
+using Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,8 @@ builder.Services.ConfigureUnitOfWork();
 builder.Services.ConfigureRateLimiting();
 builder.Services.ConfigureSwagger();
 builder.Services.AddValidators();
+builder.Services.ConfigureIdentity();
+builder.Services.AddScoped<IAuthManagerService, AuthManagerService>();
 
 builder.WebHost.UseUrls("http://0.0.0.0:5000"); 
 builder.Services.AddMediatR(cfg =>
