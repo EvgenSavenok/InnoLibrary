@@ -1,16 +1,25 @@
 ﻿using Application.Contracts.RepositoryContracts.Booking;
 using Application.MappingProfiles.Booking;
+using Domain.Entities.Booking;
 using Domain.ErrorHandlers;
+using FluentValidation;
 using MediatR;
 
 namespace Application.UseCases.Booking.Commands.ReservationCommands.CreateReservation;
 
 public class CreateReservationCommandHandler(
-    IUnitOfWork unitOfWork) : IRequestHandler<CreateReservationCommand, Unit>
+    IUnitOfWork unitOfWork,
+    IValidator<UserBookReservation> reservationValidator) : IRequestHandler<CreateReservationCommand, Unit>
 {
     public async Task<Unit> Handle(CreateReservationCommand request, CancellationToken cancellationToken)
     {
         var reservationEntity = ReservationMapper.DtoToEntity(request.ReservationDto);
+        
+        var validationResult = await reservationValidator.ValidateAsync(reservationEntity, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            throw new ValidationException(validationResult.Errors);
+        }
      
         await unitOfWork.ReservationRepository.CreateAsync(reservationEntity, cancellationToken);
         

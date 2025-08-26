@@ -21,6 +21,7 @@ public static class AuthorMapper
     {
         return new AuthorDto
         {
+            Id = author.AuthorId,
             FirstName = author.FirstName,
             LastName = author.LastName
         };

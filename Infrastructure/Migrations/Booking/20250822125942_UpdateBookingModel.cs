@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations.Booking
 {
     /// <inheritdoc />
-    public partial class AddBookingModel : Migration
+    public partial class UpdateBookingModel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,14 +16,14 @@ namespace Infrastructure.Migrations.Booking
                 name: "Authors",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    AuthorId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    FirstName = table.Column<string>(type: "text", nullable: false),
-                    LastName = table.Column<string>(type: "text", nullable: false)
+                    FirstName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    LastName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Authors", x => x.Id);
+                    table.PrimaryKey("PK_Authors", x => x.AuthorId);
                 });
 
             migrationBuilder.CreateTable(
@@ -33,9 +33,8 @@ namespace Infrastructure.Migrations.Booking
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<int>(type: "integer", nullable: true),
-                    AuthorId = table.Column<int>(type: "integer", nullable: false),
-                    ISBN = table.Column<string>(type: "text", nullable: false),
-                    BookTitle = table.Column<string>(type: "text", nullable: false),
+                    ISBN = table.Column<string>(type: "char(13)", maxLength: 13, nullable: false),
+                    BookTitle = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     GenreType = table.Column<int>(type: "integer", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     Amount = table.Column<short>(type: "smallint", nullable: false)
@@ -59,7 +58,7 @@ namespace Infrastructure.Migrations.Booking
                         name: "FK_BookAuthor_Authors_AuthorId",
                         column: x => x.AuthorId,
                         principalTable: "Authors",
-                        principalColumn: "Id",
+                        principalColumn: "AuthorId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_BookAuthor_Books_BookId",
@@ -77,6 +76,7 @@ namespace Infrastructure.Migrations.Booking
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     BookId = table.Column<int>(type: "integer", nullable: false),
                     UserId = table.Column<int>(type: "integer", nullable: true),
+                    DaysBeforeDeadline = table.Column<int>(type: "integer", nullable: false),
                     ReservationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ReturnDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
