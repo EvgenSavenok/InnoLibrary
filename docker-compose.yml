@@ -10,6 +10,23 @@ services:
       - backend_network
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__bookingConnection=Host=postgres-booking;Port=5432;Database=BookingDb;Username=postgres;Password=1111;
+      - ConnectionStrings__userConnection=Host=postgres-user;Port=5432;Database=UserDb;Username=postgres;Password=1111
+    depends_on:
+      - postgres-booking
+      - postgres-user
+        
+  db-seeker:
+    build:
+      context: ./
+      dockerfile: DbSeeker/Dockerfile
+    container_name: db-seeker
+    ports:
+      - "5001:5001"
+    networks:
+      - backend_network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__bookingConnection=Host=postgres-booking;Port=5432;Database=BookingDb;Username=postgres;Password=1111
       - ConnectionStrings__userConnection=Host=postgres-user;Port=5432;Database=UserDb;Username=postgres;Password=1111
     depends_on:

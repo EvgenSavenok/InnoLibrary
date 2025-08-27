@@ -9,6 +9,10 @@ public class Book
     public int? UserId { get; set; }
     
     public string ISBN { get; set; }
+    /// <summary>
+    /// Book title may contain 255 symbols, because there are exist many books with long titles
+    /// and to prevent the lack of characters in this column length was set to 255 symbols
+    /// </summary>
     public string BookTitle { get; set; }
     public GenreType GenreType { get; set; }
     public string Description { get; set; }
