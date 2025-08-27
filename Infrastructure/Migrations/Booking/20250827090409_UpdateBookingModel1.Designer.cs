@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations.Booking
 {
     [DbContext(typeof(BookingContext))]
-    [Migration("20250822125942_UpdateBookingModel")]
-    partial class UpdateBookingModel
+    [Migration("20250827090409_UpdateBookingModel1")]
+    partial class UpdateBookingModel1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -89,14 +89,17 @@ namespace Infrastructure.Migrations.Booking
                     b.Property<string>("ISBN")
                         .IsRequired()
                         .HasMaxLength(13)
-                        .HasColumnType("char(13)");
+                        .HasColumnType("varchar(17)");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", t =>
+                        {
+                            t.HasCheckConstraint("CK_Books_ISBN", "\"ISBN\" ~ '^[0-9-]+$' AND (char_length(replace(\"ISBN\", '-', '')) = 10 OR char_length(replace(\"ISBN\", '-', '')) = 13)");
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Booking.UserBookReservation", b =>

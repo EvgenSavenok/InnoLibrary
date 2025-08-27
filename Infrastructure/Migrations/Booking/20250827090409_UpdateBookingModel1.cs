@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations.Booking
 {
     /// <inheritdoc />
-    public partial class UpdateBookingModel : Migration
+    public partial class UpdateBookingModel1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,7 +33,7 @@ namespace Infrastructure.Migrations.Booking
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<int>(type: "integer", nullable: true),
-                    ISBN = table.Column<string>(type: "char(13)", maxLength: 13, nullable: false),
+                    ISBN = table.Column<string>(type: "varchar(17)", maxLength: 13, nullable: false),
                     BookTitle = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     GenreType = table.Column<int>(type: "integer", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
@@ -42,6 +42,7 @@ namespace Infrastructure.Migrations.Booking
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Books", x => x.Id);
+                    table.CheckConstraint("CK_Books_ISBN", "\"ISBN\" ~ '^[0-9-]+$' AND (char_length(replace(\"ISBN\", '-', '')) = 10 OR char_length(replace(\"ISBN\", '-', '')) = 13)");
                 });
 
             migrationBuilder.CreateTable(
