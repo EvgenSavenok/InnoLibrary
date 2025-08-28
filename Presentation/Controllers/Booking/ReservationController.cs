@@ -6,6 +6,7 @@ using Application.UseCases.Booking.Commands.ReservationCommands.UpdateReservatio
 using Application.UseCases.Booking.Queries.ReservationQueries.GetAllReservationsOfUser;
 using Application.UseCases.Booking.Queries.ReservationQueries.GetReservationById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers.Booking;
@@ -17,6 +18,7 @@ public class ReservationController(
     : Controller
 {
     [HttpGet("getReservationById/{reservationId}")]
+    [Authorize(Policy = "User")]
     public async Task<IActionResult> GetReservationByIdAsync(int reservationId, CancellationToken cancellationToken)
     {
         var query = new GetReservationByIdQuery(reservationId) { ReservationId = reservationId };
@@ -26,6 +28,7 @@ public class ReservationController(
     }
     
     [HttpGet("getAllReservations")]
+    [Authorize(Policy = "User")]
     public async Task<IActionResult> GetAllReservationsAsync(
         [FromQuery] ReservationQueryParameters parameters, 
         CancellationToken cancellationToken)
@@ -37,6 +40,7 @@ public class ReservationController(
     }
     
     [HttpPost("addReservation")]
+    [Authorize(Policy = "User")]
     public async Task<IActionResult> CreateReservationAsync(
         [FromBody] ReservationDto reservationDto,
         CancellationToken cancellationToken)
@@ -51,6 +55,7 @@ public class ReservationController(
     }
 
     [HttpPut("updateReservation/{reservationId}")]
+    [Authorize(Policy = "User")]
     public async Task<IActionResult> UpdateReservationAsync(
         [FromBody] ReservationDto reservationDto,
         int reservationId,
@@ -67,6 +72,7 @@ public class ReservationController(
     }
 
     [HttpDelete("deleteReservation/{reservationId}")]
+    [Authorize(Policy = "User")]
     public async Task<IActionResult> DeleteReservationAsync(
         int reservationId,
         CancellationToken cancellationToken)
