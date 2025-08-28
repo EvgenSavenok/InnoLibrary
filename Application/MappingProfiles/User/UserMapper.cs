@@ -1,19 +1,18 @@
-﻿using Application.DTO.User;
-using Application.DTO.User.UserDto;
+﻿using Domain.Entities.User;
+using UserDto = Application.DTO.User.UserDto.UserForRegistrationDto;
 
 namespace Application.MappingProfiles.User;
-using Domain.Entities.User;
 
 public static class UserMapper 
 {
-   public static AppUser DtoToEntity(UserForRegistrationDto userForRegistrationDto)
+   public static AppUser DtoToEntity(UserDto userDto)
    {
       return new AppUser
       {
-         FirstName = userForRegistrationDto.FirstName,
-         LastName = userForRegistrationDto.LastName,
-         Email = userForRegistrationDto.Email,
-         UserName = userForRegistrationDto.UserName
+         FirstName = userDto.FirstName,
+         LastName = userDto.LastName,
+         Email = userDto.Email,
+         UserName = userDto.UserName
       };
    }
 }
