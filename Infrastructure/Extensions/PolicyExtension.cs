@@ -11,7 +11,5 @@ public static class PolicyExtension
                 policy.RequireRole("Administrator"));
             options.AddPolicy("User", policy =>
                 policy.RequireRole("User"));
-            options.AddPolicy("AdminOrUser", policy =>
-                policy.RequireRole("Administrator", "User"));
         });
 }

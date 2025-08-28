@@ -13,10 +13,10 @@ namespace Presentation.Controllers.Booking;
 
 [ApiController]
 [Route("api/authors")]
+[Authorize(Policy = "Admin")]
 public class AuthorController(IMediator mediator) : Controller
 {
     [HttpGet("getAuthorById/{authorId}")]
-    [Authorize(Policy = "Admin")]
     public async Task<IActionResult> GetBookByIdAsync(int authorId, CancellationToken cancellationToken)
     {
         var query = new GetAuthorByIdQuery(authorId) { AuthorId = authorId };
@@ -26,7 +26,6 @@ public class AuthorController(IMediator mediator) : Controller
     }
     
     [HttpGet("getAllAuthors")]
-    [Authorize(Policy = "Admin")]
     public async Task<IActionResult> GetAllAuthorsAsync(
         [FromQuery] AuthorQueryParameters parameters, 
         CancellationToken cancellationToken)
@@ -38,7 +37,6 @@ public class AuthorController(IMediator mediator) : Controller
     }
     
     [HttpPost("addAuthor")]
-    [Authorize(Policy = "Admin")]
     public async Task<IActionResult> AddAuthorAsync(
         [FromBody]AuthorDto authorDto, 
         CancellationToken cancellationToken)
@@ -53,7 +51,6 @@ public class AuthorController(IMediator mediator) : Controller
     }
 
     [HttpPut("updateAuthor/{authorId}")]
-    [Authorize(Policy = "Admin")]
     public async Task<IActionResult> UpdateAuthorAsync(
         [FromBody] AuthorDto authorDto,
         int authorId,
@@ -71,7 +68,6 @@ public class AuthorController(IMediator mediator) : Controller
     }
 
     [HttpDelete("deleteAuthor/{authorId}")]
-    [Authorize(Policy = "Admin")]
     public async Task<IActionResult> DeleteAuthorAsync(
         int authorId,
         CancellationToken cancellationToken)

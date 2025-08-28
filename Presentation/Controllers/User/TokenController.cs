@@ -11,7 +11,7 @@ public class TokenController(
     IMediator mediator) : Controller
 {
     [HttpPost("refresh")]
-    public async Task<IActionResult> Refresh([FromBody] RefreshTokenDto dto)
+    public async Task<IActionResult> Refresh([FromBody] UpdateAccessTokenDto dto)
     {
         if (string.IsNullOrEmpty(dto.AccessToken))
         {
@@ -25,6 +25,6 @@ public class TokenController(
         };
         var refreshedAccessToken = await mediator.Send(command);
         
-        return Ok(new RefreshTokenDto { AccessToken = refreshedAccessToken });
+        return Ok(new UpdateAccessTokenDto { AccessToken = refreshedAccessToken });
     }
 }

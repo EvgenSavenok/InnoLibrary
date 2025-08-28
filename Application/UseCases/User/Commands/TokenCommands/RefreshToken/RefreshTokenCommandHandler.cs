@@ -12,7 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace Application.UseCases.User.Commands.TokenCommands.RefreshToken;
 
 public class RefreshTokenCommandHandler(
-    UserManager<Domain.Entities.User.User> userManager,
+    UserManager<Domain.Entities.User.AppUser> userManager,
     IAuthManagerService authManager,
     IConfiguration configuration)
     : IRequestHandler<RefreshTokenCommand, string>

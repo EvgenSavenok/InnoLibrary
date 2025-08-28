@@ -2,7 +2,7 @@
 
 namespace Domain.Entities.User;
 
-public class User : IdentityUser
+public class AppUser : IdentityUser
 {
     public string? FirstName { get; set; }
     

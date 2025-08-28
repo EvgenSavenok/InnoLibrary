@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 namespace Application.UseCases.User.Commands.UserCommands.Authenticate;
 
 public class AuthenticateUserCommandHandler(
-    UserManager<Domain.Entities.User.User> userManager,
+    UserManager<Domain.Entities.User.AppUser> userManager,
     IAuthManagerService authManager)
     : IRequestHandler<AuthenticateUserCommand, string>
 {

@@ -6,9 +6,9 @@ using Domain.Entities.User;
 
 public static class UserMapper 
 {
-   public static User DtoToEntity(UserForRegistrationDto userForRegistrationDto)
+   public static AppUser DtoToEntity(UserForRegistrationDto userForRegistrationDto)
    {
-      return new User
+      return new AppUser
       {
          FirstName = userForRegistrationDto.FirstName,
          LastName = userForRegistrationDto.LastName,
