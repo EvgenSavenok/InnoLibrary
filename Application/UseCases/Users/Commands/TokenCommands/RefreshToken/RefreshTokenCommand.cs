@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 
-namespace Application.UseCases.User.Commands.TokenCommands.RefreshToken;
+namespace Application.UseCases.Users.Commands.TokenCommands.RefreshToken;
 
 public record RefreshTokenCommand : IRequest<string>
 {

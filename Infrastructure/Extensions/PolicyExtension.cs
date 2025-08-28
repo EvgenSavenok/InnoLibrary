@@ -9,7 +9,7 @@ public static class PolicyExtension
         {
             options.AddPolicy("Admin", policy =>
                 policy.RequireRole("Administrator"));
-            options.AddPolicy("User", policy =>
-                policy.RequireRole("User"));
+            options.AddPolicy("Users", policy =>
+                policy.RequireRole("Users"));
         });
 }

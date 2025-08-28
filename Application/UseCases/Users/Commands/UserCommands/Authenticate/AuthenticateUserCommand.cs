@@ -1,8 +1,8 @@
-﻿using Application.DTO.User.UserDto;
+﻿using Application.DTO.Users.UserDto;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
-namespace Application.UseCases.User.Commands.UserCommands.Authenticate;
+namespace Application.UseCases.Users.Commands.UserCommands.Authenticate;
 
 public record AuthenticateUserCommand : IRequest<string>
 {

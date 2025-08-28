@@ -1,13 +1,14 @@
-﻿using Application.Contracts.User;
+﻿using Application.Contracts.Users;
 using Domain.ErrorHandlers;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using AppUser = Domain.Entities.User.User;
 
-namespace Application.UseCases.User.Commands.UserCommands.Authenticate;
+namespace Application.UseCases.Users.Commands.UserCommands.Authenticate;
 
 public class AuthenticateUserCommandHandler(
-    UserManager<Domain.Entities.User.AppUser> userManager,
+    UserManager<AppUser> userManager,
     IAuthManagerService authManager)
     : IRequestHandler<AuthenticateUserCommand, string>
 {

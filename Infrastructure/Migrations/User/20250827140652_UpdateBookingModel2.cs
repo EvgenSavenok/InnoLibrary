@@ -17,7 +17,7 @@ namespace Infrastructure.Migrations.User
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1", null, "User", "USER" },
+                    { "1", null, "Users", "USER" },
                     { "2", null, "Administrator", "ADMINISTRATOR" }
                 });
         }

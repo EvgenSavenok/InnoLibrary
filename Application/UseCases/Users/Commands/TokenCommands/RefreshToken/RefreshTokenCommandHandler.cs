@@ -1,18 +1,19 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Application.Contracts.User;
-using Application.DTO.User.TokenDto;
+using Application.Contracts.Users;
+using Application.DTO.Users.TokenDto;
+using Domain.Entities.User;
 using Domain.ErrorHandlers;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Application.UseCases.User.Commands.TokenCommands.RefreshToken;
+namespace Application.UseCases.Users.Commands.TokenCommands.RefreshToken;
 
 public class RefreshTokenCommandHandler(
-    UserManager<Domain.Entities.User.AppUser> userManager,
+    UserManager<User> userManager,
     IAuthManagerService authManager,
     IConfiguration configuration)
     : IRequestHandler<RefreshTokenCommand, string>

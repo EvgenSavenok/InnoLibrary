@@ -1,11 +1,12 @@
-﻿using Application.MappingProfiles.User;
+﻿using Application.MappingProfiles.Users;
 using Domain.ErrorHandlers;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using AppUser = Domain.Entities.User.User;
 
-namespace Application.UseCases.User.Commands.UserCommands.Register;
+namespace Application.UseCases.Users.Commands.UserCommands.Register;
 
-public class RegisterUserCommandHandler(UserManager<Domain.Entities.User.AppUser> userManager)
+public class RegisterUserCommandHandler(UserManager<AppUser> userManager)
     : IRequestHandler<RegisterUserCommand, IdentityResult>
 {
     public async Task<IdentityResult> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -17,13 +18,13 @@ public class RegisterUserCommandHandler(UserManager<Domain.Entities.User.AppUser
         var existingUser = await userManager.FindByNameAsync(userDto.UserName);
         if (existingUser != null)
         {
-            throw new AlreadyExistsException("User with such username already exists.");
+            throw new AlreadyExistsException("Users with such username already exists.");
         }
         
         var existingEmail = await userManager.FindByEmailAsync(userDto.Email);
         if (existingEmail != null)
         {
-            throw new AlreadyExistsException("User with such email already exists.");
+            throw new AlreadyExistsException("Users with such email already exists.");
         }
         
         var result = await userManager.CreateAsync(user, userDto.Password);

@@ -1,4 +1,4 @@
-﻿namespace Application.DTO.User.TokenDto;
+﻿namespace Application.DTO.Users.TokenDto;
 
 public record UpdateAccessTokenDto
 {

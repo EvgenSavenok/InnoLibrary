@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 namespace Infrastructure.Contexts;
 
 public class UserContext(DbContextOptions<UserContext> options) 
-    : IdentityDbContext<AppUser, IdentityRole, string>(options)
+    : IdentityDbContext<User, IdentityRole, string>(options)
 {
-    public DbSet<AppUser> Users { get; set; }
+    public DbSet<User> Users { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -16,6 +16,6 @@ public class UserContext(DbContextOptions<UserContext> options)
     
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserContext).Assembly);
 
-        modelBuilder.Entity<AppUser>();
+        modelBuilder.Entity<User>();
     }
 }

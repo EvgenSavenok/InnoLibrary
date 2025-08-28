@@ -1,5 +1,5 @@
-﻿using Application.DTO.User.TokenDto;
-using Application.UseCases.User.Commands.TokenCommands.RefreshToken;
+﻿using Application.DTO.Users.TokenDto;
+using Application.UseCases.Users.Commands.TokenCommands.RefreshToken;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

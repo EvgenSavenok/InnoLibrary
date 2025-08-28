@@ -1,4 +1,4 @@
-﻿using Application.Contracts.RepositoryContracts.Booking;
+﻿using Application.Contracts.Repository.Booking;
 using Application.DTO.Booking.ReservationDto;
 using Application.UseCases.Booking.Commands.ReservationCommands.UpdateReservation;
 using Domain.Entities.Booking;

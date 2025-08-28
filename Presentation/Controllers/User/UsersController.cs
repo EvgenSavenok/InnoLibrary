@@ -1,6 +1,6 @@
-﻿using Application.DTO.User.UserDto;
-using Application.UseCases.User.Commands.UserCommands.Authenticate;
-using Application.UseCases.User.Commands.UserCommands.Register;
+﻿using Application.DTO.Users.UserDto;
+using Application.UseCases.Users.Commands.UserCommands.Authenticate;
+using Application.UseCases.Users.Commands.UserCommands.Register;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

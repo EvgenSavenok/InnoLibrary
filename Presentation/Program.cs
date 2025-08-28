@@ -1,4 +1,4 @@
-using Application.Contracts.User;
+using Application.Contracts.Users;
 using Infrastructure.Extensions;
 using Infrastructure.Middlewares;
 using Infrastructure.Services;

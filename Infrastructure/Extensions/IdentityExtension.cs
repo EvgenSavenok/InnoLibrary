@@ -9,7 +9,7 @@ public static class IdentityExtension
 {
     public static void ConfigureIdentity(this IServiceCollection services)
     {
-        var builder = services.AddIdentityCore<AppUser>(options =>
+        var builder = services.AddIdentityCore<User>(options =>
         {
             options.Password.RequireDigit = true;
             options.Password.RequireLowercase = false;

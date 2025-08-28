@@ -2,9 +2,9 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using Application.Contracts.User;
-using Application.DTO.User.TokenDto;
-using Application.DTO.User.UserDto;
+using Application.Contracts.Users;
+using Application.DTO.Users.TokenDto;
+using Application.DTO.Users.UserDto;
 using Domain.Entities.User;
 using Domain.ErrorHandlers;
 using Microsoft.AspNetCore.Identity;
@@ -14,20 +14,20 @@ using Microsoft.IdentityModel.Tokens;
 namespace Infrastructure.Services;
 
 public class AuthManagerService(
-    UserManager<AppUser> userManager, 
+    UserManager<User> userManager, 
     IConfiguration configuration) : IAuthManagerService
 {
-    private AppUser _appUser;
+    private User _user;
 
     public async Task<bool> ValidateUser(UserForAuthenticationDto userForAuth)
     {
-        _appUser = await userManager.FindByNameAsync(userForAuth.UserName);
-        if (_appUser is null)
+        _user = await userManager.FindByNameAsync(userForAuth.UserName);
+        if (_user is null)
             throw new NotFoundException("Cannot find user");
-        return await userManager.CheckPasswordAsync(_appUser, userForAuth.Password);
+        return await userManager.CheckPasswordAsync(_user, userForAuth.Password);
     }
 
-    public async Task<TokenDto> CreateTokens(AppUser appUser, bool populateExp)
+    public async Task<TokenDto> CreateTokens(User user, bool populateExp)
     {
         var jwtSettings = configuration.GetSection("JwtSettings");
         var refreshTokenLifeTime = jwtSettings.GetSection("RefreshTokenLifeTime").Value;
@@ -38,21 +38,21 @@ public class AuthManagerService(
 
         int doubleRefreshTokenLifeTime = Int32.Parse(refreshTokenLifeTime);
         
-        _appUser = appUser;
+        _user = user;
         
         var signingCredentials = GetSigningCredentials();
         var claims = await GetClaims();
         var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
         
         var refreshToken = GenerateRefreshToken();
-        _appUser.RefreshToken = refreshToken;
+        _user.RefreshToken = refreshToken;
 
         if (populateExp)
         {
-            _appUser.RefreshTokenExpireTime = DateTime.UtcNow.AddDays(doubleRefreshTokenLifeTime);
+            _user.RefreshTokenExpireTime = DateTime.UtcNow.AddDays(doubleRefreshTokenLifeTime);
         }
 
-        await userManager.UpdateAsync(_appUser);
+        await userManager.UpdateAsync(_user);
         var accessToken = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
         
         return new TokenDto(accessToken, refreshToken);
@@ -75,11 +75,11 @@ public class AuthManagerService(
     {
         var claims = new List<Claim>
         {
-            new(ClaimTypes.Name, _appUser.UserName!),
-            new(ClaimTypes.NameIdentifier, _appUser.Id)
+            new(ClaimTypes.Name, _user.UserName!),
+            new(ClaimTypes.NameIdentifier, _user.Id)
         };
         
-        var roles = await userManager.GetRolesAsync(_appUser);
+        var roles = await userManager.GetRolesAsync(_user);
         foreach (var role in roles)
         {
             claims.Add(new Claim(ClaimTypes.Role, role));
@@ -113,15 +113,15 @@ public class AuthManagerService(
         return Convert.ToBase64String(randomNumber);
     }
     
-    public async Task<string> CreateAccessToken(AppUser appUser)
+    public async Task<string> CreateAccessToken(User user)
     {
-        _appUser = appUser;
+        _user = user;
         
         var signingCredentials = GetSigningCredentials();
         var claims = await GetClaims();
         var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
         
-        await userManager.UpdateAsync(_appUser);
+        await userManager.UpdateAsync(_user);
         var accessToken = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
         
         return accessToken;

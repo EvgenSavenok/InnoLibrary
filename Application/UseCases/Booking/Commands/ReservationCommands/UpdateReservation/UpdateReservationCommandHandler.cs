@@ -1,4 +1,4 @@
-﻿using Application.Contracts.RepositoryContracts.Booking;
+﻿using Application.Contracts.Repository.Booking;
 using Application.MappingProfiles.Booking;
 using Domain.Entities.Booking;
 using Domain.ErrorHandlers;
