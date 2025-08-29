@@ -1,4 +1,4 @@
-using Application.Contracts.User;
+using Application.Contracts.Users;
 using Infrastructure.Extensions;
 using Infrastructure.Middlewares;
 using Infrastructure.Services;
@@ -12,6 +12,8 @@ builder.Services.ConfigureRateLimiting();
 builder.Services.ConfigureSwagger();
 builder.Services.AddValidators();
 builder.Services.ConfigureIdentity();
+builder.Services.ConfigureJwt(builder.Configuration);
+builder.Services.AddAuthorizationPolicy();
 builder.Services.AddScoped<IAuthManagerService, AuthManagerService>();
 
 builder.WebHost.UseUrls("http://0.0.0.0:5000"); 
@@ -39,6 +41,9 @@ app.UseSwaggerUI(s =>
 });
 
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 app.MapRazorPages();

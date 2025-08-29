@@ -6,11 +6,13 @@ using Application.UseCases.Booking.Commands.ReservationCommands.UpdateReservatio
 using Application.UseCases.Booking.Queries.ReservationQueries.GetAllReservationsOfUser;
 using Application.UseCases.Booking.Queries.ReservationQueries.GetReservationById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers.Booking;
 
 [ApiController]
+[Authorize(Policy = "Users")]
 [Route("api/reservations")]
 public class ReservationController(
     IMediator mediator)

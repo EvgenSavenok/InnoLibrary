@@ -1,4 +1,4 @@
-﻿namespace Application.Contracts.RepositoryContracts.Booking;
+﻿namespace Application.Contracts.Repository.Booking;
 
 public interface IUnitOfWork
 {

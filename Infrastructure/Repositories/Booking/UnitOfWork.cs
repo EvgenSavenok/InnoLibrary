@@ -1,4 +1,4 @@
-﻿using Application.Contracts.RepositoryContracts.Booking;
+﻿using Application.Contracts.Repository.Booking;
 using Infrastructure.Contexts;
 
 namespace Infrastructure.Repositories.Booking;
