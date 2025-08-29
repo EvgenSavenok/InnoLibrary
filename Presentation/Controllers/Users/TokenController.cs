@@ -3,7 +3,7 @@ using Application.UseCases.Users.Commands.TokenCommands.RefreshToken;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Presentation.Controllers.User;
+namespace Presentation.Controllers.Users;
 
 [Route("api/token")]
 [ApiController]

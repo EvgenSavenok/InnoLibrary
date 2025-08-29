@@ -5,6 +5,7 @@ using Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAuthConfiguration(builder.Configuration);
 builder.Services.ConfigureBookingSqlContext(builder.Configuration);
 builder.Services.ConfigureUserSqlContext(builder.Configuration);
 builder.Services.ConfigureUnitOfWork();

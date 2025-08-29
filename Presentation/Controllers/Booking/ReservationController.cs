@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Presentation.Controllers.Booking;
 
 [ApiController]
-[Authorize(Policy = "Users")]
+[Authorize(Policy = "User")]
 [Route("api/reservations")]
 public class ReservationController(
     IMediator mediator)

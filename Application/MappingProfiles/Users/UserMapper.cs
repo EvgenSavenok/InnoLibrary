@@ -5,14 +5,14 @@ namespace Application.MappingProfiles.Users;
 
 public static class UserMapper 
 {
-   public static User DtoToEntity(UserForRegistrationDto userDto)
+   public static User DtoToEntity(UserForRegistrationDto userForRegistrationDto)
    {
       return new User
       {
-         FirstName = userDto.FirstName,
-         LastName = userDto.LastName,
-         Email = userDto.Email,
-         UserName = userDto.UserName
+         FirstName = userForRegistrationDto.FirstName,
+         LastName = userForRegistrationDto.LastName,
+         Email = userForRegistrationDto.Email,
+         UserName = userForRegistrationDto.UserName,
       };
    }
 }
