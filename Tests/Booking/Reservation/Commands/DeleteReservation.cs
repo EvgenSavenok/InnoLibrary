@@ -1,4 +1,4 @@
-﻿using Application.Contracts.RepositoryContracts.Booking;
+﻿using Application.Contracts.Repository.Booking;
 using Application.UseCases.Booking.Commands.ReservationCommands.DeleteReservation;
 using Domain.Entities.Booking;
 using Domain.ErrorHandlers;

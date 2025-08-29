@@ -6,15 +6,18 @@ using Application.UseCases.Booking.Commands.BookCommands.UpdateBook;
 using Application.UseCases.Booking.Queries.BookQueries.GetAllBooks;
 using Application.UseCases.Booking.Queries.BookQueries.GetBookById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers.Booking;
 
 [ApiController]
+[Authorize]
 [Route("api/books")]
 public class BookController(IMediator mediator): Controller
 {
     [HttpGet("getBookById/{bookId}")]
+    [Authorize(Roles = "Administrator,Users")]
     public async Task<IActionResult> GetBookByIdAsync(int bookId, CancellationToken cancellationToken)
     {
         var query = new GetBookByIdQuery(bookId) { BookId = bookId };
@@ -24,6 +27,7 @@ public class BookController(IMediator mediator): Controller
     }
 
     [HttpGet("getAllBooks")]
+    [Authorize(Roles = "Administrator,Users")]
     public async Task<IActionResult> GetAllBooksAsync(
         [FromQuery] BookQueryParameters parameters, 
         CancellationToken cancellationToken)
@@ -35,6 +39,7 @@ public class BookController(IMediator mediator): Controller
     }
     
     [HttpPost("addBook")]
+    [Authorize(Policy = "Admin")]
     public async Task<IActionResult> CreateBookAsync([FromBody] BookDto bookDto)
     {
         var command = new CreateBookCommand
@@ -47,6 +52,7 @@ public class BookController(IMediator mediator): Controller
     }
     
     [HttpPut("updateBook")]
+    [Authorize(Policy = "Admin")]
     public async Task<IActionResult> UpdateBookAsync(
         [FromBody] BookDto bookDto, 
         CancellationToken cancellationToken)
@@ -61,6 +67,7 @@ public class BookController(IMediator mediator): Controller
     }
 
     [HttpDelete("deleteBook/{bookId}")]
+    [Authorize(Policy = "Admin")]
     public async Task<IActionResult> DeleteBookAsync(int bookId, CancellationToken cancellationToken)
     {
         var command = new DeleteBookCommand { BookId = bookId };

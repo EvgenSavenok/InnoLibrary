@@ -9,14 +9,14 @@ public static class IdentityExtension
 {
     public static void ConfigureIdentity(this IServiceCollection services)
     {
-        var builder = services.AddIdentityCore<User>(o =>
+        var builder = services.AddIdentityCore<User>(options =>
         {
-            o.Password.RequireDigit = true;
-            o.Password.RequireLowercase = false;
-            o.Password.RequireUppercase = false;
-            o.Password.RequireNonAlphanumeric = false;
-            o.Password.RequiredLength = 6;
-            o.User.RequireUniqueEmail = true;
+            options.Password.RequireDigit = true;
+            options.Password.RequireLowercase = false;
+            options.Password.RequireUppercase = false;
+            options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequiredLength = 6;
+            options.User.RequireUniqueEmail = true;
         });
         builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole),
             builder.Services);

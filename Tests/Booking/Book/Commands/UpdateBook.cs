@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using Application.Contracts.RepositoryContracts.Booking;
+using Application.Contracts.Repository.Booking;
 using Application.UseCases.Booking.Commands.BookCommands.UpdateBook;
 using Domain.ErrorHandlers;
 using FluentAssertions;

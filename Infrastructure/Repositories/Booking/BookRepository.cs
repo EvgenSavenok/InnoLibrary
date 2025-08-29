@@ -1,4 +1,4 @@
-﻿using Application.Contracts.RepositoryContracts.Booking;
+﻿using Application.Contracts.Repository.Booking;
 using Application.RequestFeatures;
 using Domain.Entities.Booking;
 using Infrastructure.Contexts;

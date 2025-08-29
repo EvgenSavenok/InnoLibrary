@@ -6,12 +6,14 @@ using Application.UseCases.Booking.Commands.AuthorCommands.UpdateAuthor;
 using Application.UseCases.Booking.Queries.AuthorQueries.GetAllAuthors;
 using Application.UseCases.Booking.Queries.AuthorQueries.GetAuthorByBookId;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers.Booking;
 
 [ApiController]
 [Route("api/authors")]
+[Authorize(Policy = "Admin")]
 public class AuthorController(IMediator mediator) : Controller
 {
     [HttpGet("getAuthorById/{authorId}")]

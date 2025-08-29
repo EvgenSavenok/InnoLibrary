@@ -1,6 +1,6 @@
 ﻿namespace Application.DTO.Users.UserDto;
 
-public class UserForAuthenticationDto
+public record UserForAuthenticationDto
 {
     public string UserName { get; set; }
     

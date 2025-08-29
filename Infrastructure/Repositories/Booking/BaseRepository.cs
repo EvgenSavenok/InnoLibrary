@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using Application.Contracts.RepositoryContracts.Booking;
+using Application.Contracts.Repository.Booking;
 using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 

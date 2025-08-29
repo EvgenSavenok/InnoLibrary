@@ -1,7 +1,7 @@
 ﻿using Application.RequestFeatures;
 using Domain.Entities.Booking;
 
-namespace Application.Contracts.RepositoryContracts.Booking;
+namespace Application.Contracts.Repository.Booking;
 
 public interface IReservationRepository : IBaseRepository<UserBookReservation>
 {

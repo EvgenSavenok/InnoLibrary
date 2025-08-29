@@ -14,7 +14,6 @@ public static class UserMapper
          LastName = userForRegistrationDto.LastName,
          Email = userForRegistrationDto.Email,
          UserName = userForRegistrationDto.UserName,
-         PhoneNumber = userForRegistrationDto.PhoneNumber
       };
    }
 }

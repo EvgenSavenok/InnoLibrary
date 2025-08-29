@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Application.Contracts.RepositoryContracts.Booking;
+namespace Application.Contracts.Repository.Booking;
 
 public interface IBaseRepository<T>
 {
