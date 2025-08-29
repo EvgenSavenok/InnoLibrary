@@ -22,5 +22,7 @@ public static class IdentityExtension
             builder.Services);
         builder.AddEntityFrameworkStores<UserContext>()
             .AddDefaultTokenProviders();
+        
+        builder.Services.AddScoped<SignInManager<User>>();
     }
 }

@@ -1,20 +1,20 @@
 ﻿using System.Security.Claims;
-using Application.Contracts.User;
-using Application.DTO.Users.TokenDto;
+using Application.Contracts.Users;
+using Domain.Entities.User;
 using Domain.ErrorHandlers;
-using Duende.IdentityServer.Models;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
-namespace Application.UseCases.User.Commands.GithubAuthCommands;
+namespace Application.UseCases.Users.Commands.UserCommands.GithubAuth;
 
 public class GithubAuthCommandHandler(
-    UserManager<Domain.Entities.User.User> userManager,
-    IAuthManagerService authManager) : IRequestHandler<GithubAuthCommand, TokenDto>
+    UserManager<User> userManager,
+    IAuthManagerService authManager) : IRequestHandler<GithubAuthCommand, string>
 {
     private const string Provider = "GitHub";
     
-    public async Task<TokenDto> Handle(GithubAuthCommand request, CancellationToken cancellationToken)
+    public async Task<string> Handle(GithubAuthCommand request, CancellationToken cancellationToken)
     {
         var authResult = request.AuthResult;    
         if (!authResult.Succeeded)
@@ -36,30 +36,30 @@ public class GithubAuthCommandHandler(
             user = await CreateNewUserAsync(principal);
         }
 
-        await EnsureLoginExistsAsync(user, principal, cancellationToken);
+        await EnsureLoginExistsAsync(user, principal);
 
-        authManager.
-        // var accessToken = await _tokenService.GenerateAccessToken(user);
-        // var refreshToken = _tokenService.GenerateRefreshToken();
-        // var tokenHash = _tokenHasher.HashToken(refreshToken);
+        var tokens = await authManager.CreateTokens(user, populateExp: true);
+        if (tokens.AccessToken == null || tokens.RefreshToken == null)
+        {
+            throw new UnauthorizedException("Cannot create access or refresh token");
+        }
+        
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true, 
+            SameSite = SameSiteMode.None,
+            Expires = DateTime.UtcNow.AddDays(7)
+        };
 
-        // var refreshTokenEntity = new RefreshToken
-        // {
-        //     Id = Guid.NewGuid().ToString(),
-        //     TokenHash = tokenHash,
-        //     CreatedAt = DateTime.UtcNow,
-        //     ExpiresAt = DateTime.UtcNow.AddDays(_jwtSettings.Value.RefreshTokenExpirationInDays),
-        //     UserId = user.Id
-        // };
-        //
-        // await _refreshTokensRepository.AddAsync(refreshTokenEntity, cancellationToken);
-
-        return new TokenDto(accessToken, refreshToken);
+        request.HttpContext.Response.Cookies.Append("refreshToken", tokens.RefreshToken, cookieOptions);
+        
+        return tokens.AccessToken;
     }
     
-    private async Task<Domain.Entities.User.User> CreateNewUserAsync(ClaimsPrincipal principal)
+    private async Task<User> CreateNewUserAsync(ClaimsPrincipal principal)
     {
-        var user = new Domain.Entities.User.User
+        var user = new User
         {
             Id = Guid.NewGuid().ToString(),
             Email = principal.FindFirst(ClaimTypes.Email)?.Value,
@@ -74,14 +74,16 @@ public class GithubAuthCommandHandler(
         {
             throw new BadRequestException("Failed to create new user.");
         }
+        
+        var userRoleAsString = "User";
+        await userManager.AddToRolesAsync(user, new List<string> { userRoleAsString });
 
         return user;
     }
     
     private async Task EnsureLoginExistsAsync(
-        Domain.Entities.User.User user, 
-        ClaimsPrincipal principal,
-        CancellationToken cancellationToken)
+        User user, 
+        ClaimsPrincipal principal)
     {
         var logins = await userManager.GetLoginsAsync(user);
 
@@ -98,6 +100,6 @@ public class GithubAuthCommandHandler(
         }
 
         var userLoginInfo = new UserLoginInfo(Provider, providerKey, Provider);
-        var result = await userManager.AddLoginAsync(user, userLoginInfo);
+        await userManager.AddLoginAsync(user, userLoginInfo);
     }
 }

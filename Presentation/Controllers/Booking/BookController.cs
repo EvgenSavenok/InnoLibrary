@@ -17,7 +17,7 @@ namespace Presentation.Controllers.Booking;
 public class BookController(IMediator mediator): Controller
 {
     [HttpGet("getBookById/{bookId}")]
-    [Authorize(Roles = "Administrator,Users")]
+    [Authorize(Roles = "Administrator,User")]
     public async Task<IActionResult> GetBookByIdAsync(int bookId, CancellationToken cancellationToken)
     {
         var query = new GetBookByIdQuery(bookId) { BookId = bookId };
@@ -27,7 +27,7 @@ public class BookController(IMediator mediator): Controller
     }
 
     [HttpGet("getAllBooks")]
-    [Authorize(Roles = "Administrator,Users")]
+    [Authorize(Roles = "Administrator,User")]
     public async Task<IActionResult> GetAllBooksAsync(
         [FromQuery] BookQueryParameters parameters, 
         CancellationToken cancellationToken)
