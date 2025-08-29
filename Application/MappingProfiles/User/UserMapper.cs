@@ -1,4 +1,5 @@
-﻿using Application.DTO.User;
+﻿using Application.DTO.Users;
+using Application.DTO.Users.UserDto;
 
 namespace Application.MappingProfiles.User;
 using Domain.Entities.User;
