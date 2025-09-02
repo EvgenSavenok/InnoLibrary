@@ -15,17 +15,6 @@ public class GitHubAuthController(
     SignInManager<User> signInManager)
     : Controller
 {
-    private const string Provider = "GitHub";
-
-    // [HttpPost("login")]
-    // public IActionResult TriggerExternalLogin()
-    // {
-    //     var redirectUrl = Url.Action(nameof(HandleExternalLoginCallback), "GitHubAuth");
-    //     var properties = signInManager.ConfigureExternalAuthenticationProperties(Provider, redirectUrl);
-    //
-    //     return Challenge(properties, Provider);
-    // }
-
     [HttpGet("callback")]
     public async Task<IActionResult> HandleExternalLoginCallback(CancellationToken cancellationToken = default)
     {
