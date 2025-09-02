@@ -8,5 +8,5 @@ public record AuthenticateUserCommand : IRequest<string>
 {
     public UserForAuthenticationDto UserForAuthenticationDto { get; set; }
     
-    public HttpContext HttpContext { get; set; } = null!;
+    public HttpContext HttpContext { get; set; } = null;
 }

@@ -4,7 +4,7 @@ using Application.UseCases.Users.Commands.UserCommands.Register;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Presentation.Controllers.User;
+namespace Presentation.Controllers.Users;
 
 [Route("api/users")]
 [ApiController]
