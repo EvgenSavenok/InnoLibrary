@@ -1,4 +1,5 @@
 ﻿using Application.UseCases.Users.Commands.UserCommands.GithubAuth;
+using Application.UseCases.Users.Commands.UserCommands.GoogleAuth;
 using Domain.Entities.User;
 using Duende.IdentityServer;
 using MediatR;
@@ -9,8 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Presentation.Controllers.Users;
 
 [ApiController]
-[Route("api/auth/github")]
-public class GitHubAuthController(
+[Route("api/auth/google")]
+public class GoogleAuthController(
     IMediator mediator,
     SignInManager<User> signInManager)
     : Controller
@@ -20,7 +21,7 @@ public class GitHubAuthController(
     {
         var authenticateResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
         
-        var command = new GithubAuthCommand(authenticateResult, HttpContext);
+        var command = new GoogleAuthCommand(authenticateResult, HttpContext);
         var tokensDto = await mediator.Send(command, cancellationToken);
 
         await HttpContext.SignOutAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
@@ -33,12 +34,12 @@ public class GitHubAuthController(
     {
         var redirectUrl = Url.Action(
             action: nameof(HandleExternalLoginCallback),
-            controller: "GitHubAuth",          
+            controller: "GoogleAuth",          
             values: null,
             protocol: Request.Scheme);
 
-        var props = signInManager.ConfigureExternalAuthenticationProperties("GitHub", redirectUrl);
+        var props = signInManager.ConfigureExternalAuthenticationProperties("Google", redirectUrl);
         
-        return Challenge(props, "GitHub");
+        return Challenge(props, "Google");
     }
 }

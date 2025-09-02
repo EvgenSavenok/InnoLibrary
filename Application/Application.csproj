@@ -8,7 +8,6 @@
 
     <ItemGroup>
       <Folder Include="Contracts\Repository\" />
-      <Folder Include="UseCases\Users\Commands\UserCommands\" />
     </ItemGroup>
 
     <ItemGroup>

@@ -35,6 +35,21 @@ public static class OAuthExtension
             options.ClaimActions.MapJsonKey(ClaimTypes.Name, "login");
             options.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
             options.ClaimActions.MapJsonKey("urn:github:avatar", "avatar_url");
+        })
+        .AddGoogle(options =>
+        {
+            options.CallbackPath = new PathString(configuration["GoogleAuthSettings:CallbackUri"]!);
+            options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+            options.ClientId = configuration["GoogleAuthSettings:ClientId"]!;
+            options.ClientSecret = configuration["GoogleAuthSettings:ClientSecret"]!;
+            
+            options.SaveTokens = true;
+            
+            //options.Scope.Add("user:email");
+
+            options.ClaimActions.MapJsonKey(ClaimTypes.Name, "name");
+            options.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
+            options.ClaimActions.MapJsonKey("urn:google:picture", "picture");
         });
     }
 }
