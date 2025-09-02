@@ -1,12 +1,12 @@
 ﻿using Application.MappingProfiles.Users;
+using Domain.Entities.User;
 using Domain.ErrorHandlers;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using AppUser = Domain.Entities.User.User;
 
 namespace Application.UseCases.Users.Commands.UserCommands.Register;
 
-public class RegisterUserCommandHandler(UserManager<AppUser> userManager)
+public class RegisterUserCommandHandler(UserManager<User> userManager)
     : IRequestHandler<RegisterUserCommand, IdentityResult>
 {
     public async Task<IdentityResult> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
