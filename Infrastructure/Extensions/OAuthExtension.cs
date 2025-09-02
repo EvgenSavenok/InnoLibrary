@@ -45,8 +45,6 @@ public static class OAuthExtension
             
             options.SaveTokens = true;
             
-            //options.Scope.Add("user:email");
-
             options.ClaimActions.MapJsonKey(ClaimTypes.Name, "name");
             options.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
             options.ClaimActions.MapJsonKey("urn:google:picture", "picture");
