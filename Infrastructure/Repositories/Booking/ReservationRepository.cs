@@ -35,7 +35,7 @@ public class ReservationRepository(BookingContext bookingContext)
         
         var totalCount = await query.CountAsync(cancellationToken);
         
-        query = query.Paging(1, 10);
+        query = query.Paging(parameters.PageNumber, parameters.PageSize);
         
         var items = await query.ToListAsync(cancellationToken);
 
