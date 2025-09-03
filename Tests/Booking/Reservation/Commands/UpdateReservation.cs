@@ -1,4 +1,4 @@
-﻿using Application.Contracts.RepositoryContracts.Booking;
+﻿using Application.Contracts.Repository.Booking;
 using Application.DTO.Booking.ReservationDto;
 using Application.UseCases.Booking.Commands.ReservationCommands.UpdateReservation;
 using Domain.Entities.Booking;
@@ -22,7 +22,7 @@ public class UpdateReservation
         _validatorMock = new Mock<IValidator<UserBookReservation>>();
         _handler = new UpdateReservationCommandHandler(_unitOfWorkMock.Object,  _validatorMock.Object);
     }
-
+    
     [Fact]
     public async Task Handle_UpdateReservationAndUpdateBookAmount_ReturnsUnitValue()
     {

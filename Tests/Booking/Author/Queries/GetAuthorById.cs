@@ -1,4 +1,4 @@
-﻿using Application.Contracts.RepositoryContracts.Booking;
+﻿using Application.Contracts.Repository.Booking;
 using Application.UseCases.Booking.Queries.AuthorQueries.GetAuthorByBookId;
 using Domain.ErrorHandlers;
 using FluentAssertions;

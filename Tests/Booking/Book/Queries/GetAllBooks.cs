@@ -1,4 +1,4 @@
-﻿using Application.Contracts.RepositoryContracts.Booking;
+﻿using Application.Contracts.Repository.Booking;
 using Application.DTO.Booking.BookDto;
 using Application.RequestFeatures;
 using Application.UseCases.Booking.Queries.BookQueries.GetAllBooks;

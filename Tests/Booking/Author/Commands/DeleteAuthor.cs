@@ -1,4 +1,4 @@
-﻿using Application.Contracts.RepositoryContracts.Booking;
+﻿using Application.Contracts.Repository.Booking;
 using Application.UseCases.Booking.Commands.AuthorCommands.DeleteAuthor;
 using Domain.ErrorHandlers;
 using FluentAssertions;

@@ -1,4 +1,4 @@
-﻿using Application.Contracts.RepositoryContracts.Booking;
+﻿using Application.Contracts.Repository.Booking;
 using Application.DTO.Booking.AuthorDto;
 using Application.UseCases.Booking.Commands.AuthorCommands.UpdateAuthor;
 using Domain.ErrorHandlers;

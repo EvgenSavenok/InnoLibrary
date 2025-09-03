@@ -1,4 +1,4 @@
-﻿using Application.Contracts.RepositoryContracts.Booking;
+﻿using Application.Contracts.Repository.Booking;
 using Application.UseCases.Booking.Queries.ReservationQueries.GetReservationById;
 using Domain.Entities.Booking;
 using Domain.ErrorHandlers;
